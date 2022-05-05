@@ -51,7 +51,16 @@ class BooksViewController: UIViewController, UITableViewDataSource {
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
-        self.topLabel.text = "Ayoooooo"
+        //  self.topLabel.text = "Ayoooooo"
+        
+        let url = URL(string: "https://mylibrary.io/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%7D%7D%7D%0A%0A")!
+
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()
     }
     
 
