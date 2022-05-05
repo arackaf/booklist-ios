@@ -7,15 +7,47 @@
 
 import UIKit
 
-class BooksViewController: UIViewController {
+class BookTableCell: UITableViewCell {
 
+    @IBOutlet var cellLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+}
+
+class BooksViewController: UIViewController, UITableViewDataSource {
+
+
+    @IBOutlet var booksTableView: UITableView!
     @IBOutlet var topLabel: UILabel!
     @IBOutlet var dumbButton: UIButton!
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "bookTableCell", for: indexPath) as! BookTableCell
+        
+        
+        cell.textLabel?.text = "Foo " + indexPath.description
+        cell.cellLabel.text = "Ayyyyy"
+        
+        return cell;
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.booksTableView.dataSource = self
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
