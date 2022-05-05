@@ -10,12 +10,12 @@ import Foundation
 struct BookListItemModel {
     typealias BlurhashPreview = (width: Int, height: Int, blurhash: String)
     
-    init(json: [String:Any]) {
+    init(_ json: [String:Any]) {
         _id = json["_id"] as! String
         title = json["title"] as? String
         
         let smallImagePreview = json["smallImagePreview"];
-
+        
         if smallImagePreview is BlurhashPreview {
             smallImagePreviewBlurhash = smallImagePreview as? BlurhashPreview
         }

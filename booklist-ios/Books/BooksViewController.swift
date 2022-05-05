@@ -7,48 +7,12 @@
 
 import UIKit
 
-//class BookTableCell: UITableViewCell {
-//
-//    @IBOutlet var cellLabel: UILabel!
-//    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-//}
-
 class BooksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var booksTableView: UITableView!
     @IBOutlet var topLabel: UILabel!
     @IBOutlet var dumbButton: UIButton!
     
     var books: [BookListItemModel] = []
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
-        cell.titleLabel.text = "Ayyyyy yo!"
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected")
-        print(indexPath)
-        print(type(of:self.navigationController!))
-        
-        let bookDetails = BookDetailsView();
-        self.navigationController!.pushViewController(bookDetails, animated: true);
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,22 +27,43 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         search("")
     }
-
-    func search(_ text: String) {
-        //  self.topLabel.text = "Ayoooooo"
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
         
+        let book = books[indexPath.row]
+        cell.titleLabel.text = book.title
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return books.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let bookDetails = BookDetailsView();
+        self.navigationController!.pushViewController(bookDetails, animated: true);
+    }
+    
+    func search(_ text: String) {
         let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%2CsmallImagePreview%7D%7D%7D%0A";
-        // let url = URL(string: "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%7D%7D%7D%0A")!
         let url = URL(string: query)!
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data) as? [String:AnyObject],
-               let result = json["data"]?["allBooks"] as? [String:Any]{
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String:Any],
+               let data = json["data"] as? [String:Any],
+               let querySet = data["allBooks"] as? [String:Any],
+               let results = querySet["Books"] as? [[String:Any]] {
                 
-                print(json["data"] as? AnyObject)
+                self.books = results.map { BookListItemModel($0) }
+                
+                DispatchQueue.main.sync {
+                    self.booksTableView.reloadData()
+                }
             } else {
-                print("error, yo")
+                print("oops")
             }
             
         }
