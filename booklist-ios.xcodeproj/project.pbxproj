@@ -18,6 +18,7 @@
 		17BC7B162824200E003AFDB8 /* BookDisplayTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17BC7B142824200E003AFDB8 /* BookDisplayTableCell.xib */; };
 		17BC7B192824349D003AFDB8 /* BookDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B172824349D003AFDB8 /* BookDetailsView.swift */; };
 		17BC7B1A2824349D003AFDB8 /* BookDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17BC7B182824349D003AFDB8 /* BookDetailsView.xib */; };
+		17BC7B20282454E5003AFDB8 /* BookListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B1F282454E5003AFDB8 /* BookListItemModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		17BC7B142824200E003AFDB8 /* BookDisplayTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookDisplayTableCell.xib; sourceTree = "<group>"; };
 		17BC7B172824349D003AFDB8 /* BookDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsView.swift; sourceTree = "<group>"; };
 		17BC7B182824349D003AFDB8 /* BookDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookDetailsView.xib; sourceTree = "<group>"; };
+		17BC7B1F282454E5003AFDB8 /* BookListItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListItemModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				17BC7B142824200E003AFDB8 /* BookDisplayTableCell.xib */,
 				17BC7B172824349D003AFDB8 /* BookDetailsView.swift */,
 				17BC7B182824349D003AFDB8 /* BookDetailsView.xib */,
+				17BC7B1F282454E5003AFDB8 /* BookListItemModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				172C486D2822BFC200557316 /* SceneDelegate.swift in Sources */,
 				17BC7B192824349D003AFDB8 /* BookDetailsView.swift in Sources */,
 				17BC7B152824200E003AFDB8 /* BookDisplayTableCell.swift in Sources */,
+				17BC7B20282454E5003AFDB8 /* BookListItemModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

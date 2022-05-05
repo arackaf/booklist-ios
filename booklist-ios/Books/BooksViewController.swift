@@ -28,6 +28,8 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var topLabel: UILabel!
     @IBOutlet var dumbButton: UIButton!
     
+    var books: [BookListItemModel] = []
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
         cell.titleLabel.text = "Ayyyyy yo!"
@@ -59,6 +61,29 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         navigationItem.backButtonTitle = "Books"
         booksTableView.register(mainBookTableCell, forCellReuseIdentifier: BookDisplayTableCell.identifier)
         
+        search("")
+    }
+
+    func search(_ text: String) {
+        //  self.topLabel.text = "Ayoooooo"
+        
+        let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%2CsmallImagePreview%7D%7D%7D%0A";
+        // let url = URL(string: "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%7D%7D%7D%0A")!
+        let url = URL(string: query)!
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String:AnyObject],
+               let result = json["data"]?["allBooks"] as? [String:Any]{
+                
+                print(json["data"] as? AnyObject)
+            } else {
+                print("error, yo")
+            }
+            
+        }
+
+        task.resume()
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
