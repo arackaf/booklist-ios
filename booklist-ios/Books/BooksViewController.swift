@@ -23,7 +23,7 @@ import UIKit
 //    }
 //}
 
-class BooksViewController: UIViewController, UITableViewDataSource {
+class BooksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var booksTableView: UITableView!
     @IBOutlet var topLabel: UILabel!
     @IBOutlet var dumbButton: UIButton!
@@ -39,13 +39,26 @@ class BooksViewController: UIViewController, UITableViewDataSource {
         return 5
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Selected")
+        print(indexPath)
+        print(type(of:self.navigationController!))
+        
+        let bookDetails = BookDetailsView();
+        self.navigationController!.pushViewController(bookDetails, animated: true);
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.booksTableView.dataSource = self
+        booksTableView.dataSource = self
+        booksTableView.delegate = self
         
         let mainBookTableCell = UINib(nibName: BookDisplayTableCell.identifier, bundle: nil)
-        self.booksTableView.register(mainBookTableCell, forCellReuseIdentifier: BookDisplayTableCell.identifier)
+        
+        navigationItem.backButtonTitle = "Books"
+        booksTableView.register(mainBookTableCell, forCellReuseIdentifier: BookDisplayTableCell.identifier)
+        
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
