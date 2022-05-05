@@ -7,37 +7,32 @@
 
 import UIKit
 
-class BookTableCell: UITableViewCell {
-
-    @IBOutlet var cellLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-}
+//class BookTableCell: UITableViewCell {
+//
+//    @IBOutlet var cellLabel: UILabel!
+//    
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        // Initialization code
+//    }
+//
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
+//}
 
 class BooksViewController: UIViewController, UITableViewDataSource {
-
-
     @IBOutlet var booksTableView: UITableView!
     @IBOutlet var topLabel: UILabel!
     @IBOutlet var dumbButton: UIButton!
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "bookTableCell", for: indexPath) as! BookTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
+        cell.titleLabel.text = "Ayyyyy yo!"
         
-        
-        cell.textLabel?.text = "Foo " + indexPath.description
-        cell.cellLabel.text = "Ayyyyy"
-        
-        return cell;
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,8 +41,11 @@ class BooksViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.booksTableView.dataSource = self
+        
+        let mainBookTableCell = UINib(nibName: BookDisplayTableCell.identifier, bundle: nil)
+        self.booksTableView.register(mainBookTableCell, forCellReuseIdentifier: BookDisplayTableCell.identifier)
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
@@ -62,6 +60,4 @@ class BooksViewController: UIViewController, UITableViewDataSource {
 
         task.resume()
     }
-    
-
 }
