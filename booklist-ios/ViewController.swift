@@ -15,14 +15,18 @@ class ViewController: UIViewController {
 
         let url = URL(string: "https://d193qjyckdxivp.cloudfront.net/small-covers/573d1b97120426ef0078aa92/f09c52a1-b0ce-4557-8c4c-3d12e38d226b.jpg")!
         
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, _, _) in
+            if  let data = data,
+                let image = UIImage(data: data) {
                 print(image.size)
             
-                image1.image = image
-                image1.frame.size = image.size
+                DispatchQueue.main.sync {
+                    self.image1.image = image
+                    self.image1.frame.size = image.size
+                }
             }
         }
+        dataTask.resume()
         
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imageName = documentDirectory.appendingPathComponent("img1.jpg")
