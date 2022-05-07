@@ -29,3 +29,4 @@ struct BookListItemModel {
     var smallImagePreviewBase64: String?
     var smallImagePreviewBlurhash: BlurhashPreview?
 }
+

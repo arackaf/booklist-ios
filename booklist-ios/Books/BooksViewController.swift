@@ -25,14 +25,29 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         navigationItem.backButtonTitle = "Books"
         booksTableView.register(mainBookTableCell, forCellReuseIdentifier: BookDisplayTableCell.identifier)
         
+        booksTableView.layoutMargins = UIEdgeInsets.zero
+        booksTableView.separatorInset = UIEdgeInsets.zero
+        
+//        booksTableView.estimatedRowHeight = UITableView.automaticDimension
+//        booksTableView.rowHeight = UITableView.automaticDimension
+        
         search("")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
         
+
         let book = books[indexPath.row]
         cell.titleLabel.text = book.title
+        cell.junkLabel.isHidden = true
+        
+        if indexPath.row == 3 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                cell.junkLabel.isHidden = false
+                cell.sizeToFit()
+            }
+        }
         
         return cell
     }

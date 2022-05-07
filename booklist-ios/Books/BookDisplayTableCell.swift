@@ -14,6 +14,7 @@ class BookDisplayTableCell: UITableViewCell {
     }
     
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var junkLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
