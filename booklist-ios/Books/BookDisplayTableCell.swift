@@ -13,8 +13,14 @@ class BookDisplayTableCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: nil)
     }
     
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var junkLabel: UILabel!
+//    @IBOutlet var titleLabel: UILabel!
+//    @IBOutlet var junkLabel: UILabel!
+//    @IBOutlet var coverContainer: UIStackView!
+//    @IBOutlet var coverImageView: UIImageView!
+    
+    @IBOutlet var coverContainer: UIStackView!
+    
+    @IBOutlet var coverImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

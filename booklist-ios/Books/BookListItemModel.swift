@@ -14,19 +14,19 @@ struct BookListItemModel {
         _id = json["_id"] as! String
         title = json["title"] as? String
         
-        let smallImagePreview = json["smallImagePreview"];
+        let mobileImagePreview = json["mobileImagePreview"];
         
-        if smallImagePreview is BlurhashPreview {
-            smallImagePreviewBlurhash = smallImagePreview as? BlurhashPreview
+        if mobileImagePreview is BlurhashPreview {
+            mobileImagePreviewBlurhash = mobileImagePreview as? BlurhashPreview
         }
-        else if smallImagePreview is String {
-            smallImagePreviewBase64 = smallImagePreview as? String
+        else if mobileImagePreview is String {
+            mobileImagePreviewBase64 = mobileImagePreview as? String
         }
     }
     
     var _id: String
     var title: String?
-    var smallImagePreviewBase64: String?
-    var smallImagePreviewBlurhash: BlurhashPreview?
+    var mobileImagePreviewBase64: String?
+    var mobileImagePreviewBlurhash: BlurhashPreview?
 }
 

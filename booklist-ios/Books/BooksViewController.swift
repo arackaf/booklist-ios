@@ -39,12 +39,44 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
 
         let book = books[indexPath.row]
-        cell.titleLabel.text = book.title
-        cell.junkLabel.isHidden = true
+        //cell.titleLabel.text = book.title
+        //cell.junkLabel.isHidden = true
+        
+        //let coverImageView = UIImageView()
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imageName = documentDirectory.appendingPathComponent("img1.jpg")
+        
+        let imgData = try? Data(contentsOf:imageName)
+        if let imageOnDisk = UIImage(data:imgData!) {
+            //DispatchQueue.main.sync {
+            
+            
+            NSLayoutConstraint.activate([
+                cell.coverImageView.topAnchor.constraint(equalTo: cell.topAnchor),
+                cell.coverImageView.leftAnchor.constraint(equalTo: cell.leftAnchor),
+                //cell.coverImageView.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
+                cell.coverImageView.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width),
+                cell.coverImageView.heightAnchor.constraint(equalToConstant: imageOnDisk.size.height),
+            ])
+
+            //cell.coverImageView.frame.size = imageOnDisk.size
+            cell.coverImageView.image = imageOnDisk
+
+
+            
+
+            
+            print(cell.coverImageView.constraints);
+            //}
+        }
+        //cell.coverContainer.addSubview(coverImageView)
+        //cell.coverContainer.sizeToFit()
+        cell.sizeToFit()
+        //cell.coverContainer.sizeToFit()
         
         if indexPath.row == 3 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                cell.junkLabel.isHidden = false
+                //cell.junkLabel.isHidden = false
                 cell.sizeToFit()
             }
         }
@@ -62,7 +94,7 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func search(_ text: String) {
-        let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%2CsmallImagePreview%7D%7D%7D%0A";
+        let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CmobileImage%2CmobileImagePreview%7D%7D%7D%0A";
         let url = URL(string: query)!
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
