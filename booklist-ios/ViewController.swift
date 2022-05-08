@@ -70,6 +70,17 @@ class ViewController: UIViewController {
     @IBOutlet var image1: UIImageView!
     @IBOutlet var image2: UIImageView!
     
+    @IBAction func loadCollectionView(_ sender: Any) {
+        var viewControllers = self.navigationController!.viewControllers
+        _ = viewControllers.popLast()
+
+        // Push targetViewController
+        let nextViewController = self.storyboard!.instantiateViewController(withIdentifier: "loggedInMain")
+        viewControllers.append(nextViewController)
+
+        self.navigationController?.setViewControllers(viewControllers, animated: true)
+    }
+    
     @IBAction func buttonClick(_ sender: Any) {
         self.mainLabel.text = "Ayyyyyy";
         
