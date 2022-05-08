@@ -22,6 +22,7 @@
 		17BC7B2228273C44003AFDB8 /* ScaledImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B2128273C44003AFDB8 /* ScaledImageView.swift */; };
 		17BC7B2828285F4B003AFDB8 /* BooksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B2728285F4B003AFDB8 /* BooksListViewController.swift */; };
 		17BC7B2A282862D5003AFDB8 /* BookListCollectionCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B29282862D5003AFDB8 /* BookListCollectionCellCollectionViewCell.swift */; };
+		17BC7B2C28287128003AFDB8 /* BooksListViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BC7B2B28287128003AFDB8 /* BooksListViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		17BC7B2128273C44003AFDB8 /* ScaledImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledImageView.swift; sourceTree = "<group>"; };
 		17BC7B2728285F4B003AFDB8 /* BooksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListViewController.swift; sourceTree = "<group>"; };
 		17BC7B29282862D5003AFDB8 /* BookListCollectionCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCollectionCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		17BC7B2B28287128003AFDB8 /* BooksListViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListViewLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				17BC7B1F282454E5003AFDB8 /* BookListItemModel.swift */,
 				17BC7B2728285F4B003AFDB8 /* BooksListViewController.swift */,
 				17BC7B29282862D5003AFDB8 /* BookListCollectionCellCollectionViewCell.swift */,
+				17BC7B2B28287128003AFDB8 /* BooksListViewLayout.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				172C486F2822BFC200557316 /* ViewController.swift in Sources */,
 				172C48802822E2ED00557316 /* BooksViewController.swift in Sources */,
 				17BC7B2228273C44003AFDB8 /* ScaledImageView.swift in Sources */,
+				17BC7B2C28287128003AFDB8 /* BooksListViewLayout.swift in Sources */,
 				172C486B2822BFC200557316 /* AppDelegate.swift in Sources */,
 				172C486D2822BFC200557316 /* SceneDelegate.swift in Sources */,
 				17BC7B192824349D003AFDB8 /* BookDetailsView.swift in Sources */,
