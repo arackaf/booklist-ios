@@ -50,28 +50,21 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let imageOnDisk = UIImage(data:imgData!) {
             //DispatchQueue.main.sync {
             
+
+            //cell.coverImageView.frame.size = imageOnDisk.size
+            cell.coverImageView.image = imageOnDisk
             
 //            NSLayoutConstraint.activate([
-//                cell.coverImageView.topAnchor.constraint(equalTo: cell.topAnchor),
-//                cell.coverImageView.leftAnchor.constraint(equalTo: cell.leftAnchor),
-//                //cell.coverImageView.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
 //                cell.coverImageView.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width),
 //                cell.coverImageView.heightAnchor.constraint(equalToConstant: imageOnDisk.size.height),
-//            ])
-
-            cell.coverImageView.frame.size = imageOnDisk.size
-            cell.coverImageView.image = imageOnDisk
-
-
+//            ]);
             
-
-            
-            print(cell.coverImageView.constraints);
             //}
         }
         //cell.coverContainer.addSubview(coverImageView)
         //cell.coverContainer.sizeToFit()
         cell.sizeToFit()
+
         //cell.coverContainer.sizeToFit()
         
         if indexPath.row == 3 {
