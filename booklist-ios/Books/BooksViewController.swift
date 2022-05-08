@@ -60,7 +60,7 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
             //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
             //img.frame.size = imageOnDisk.size
             cell.coverContainer.addArrangedSubview(img)
-            cell.coverContainerHeight.constant = imageOnDisk.size.height
+            //cell.coverContainerHeight.constant = imageOnDisk.size.height
         }
         
         // -----------------------------------------------------------------------------------------
@@ -94,12 +94,13 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                 print("removing")
                                 item.removeFromSuperview()
                             }
-                            cell.coverContainerHeight.constant = 150
+                            cell.coverContainer.removeFromSuperview()
+                            //cell.coverContainerHeight.constant = 150
                             //cell.layoutSubviews()
                             //cell.coverContainer.sizeToFit()
                             //cell.sizeToFit()
                             //cell.coverContainer.removeFromSuperview()
-                            //cell.sizeToFit()
+                            cell.sizeToFit()
 //
                             //let img = UIImageView()
                             //img.contentMode = .scaleAspectFit
