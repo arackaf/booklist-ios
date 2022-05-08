@@ -14,6 +14,7 @@ struct BookListItemModel {
         _id = json["_id"] as! String
         title = json["title"] as? String
         
+        self.mobileImage = json["mobileImage"] as? String
         let mobileImagePreview = json["mobileImagePreview"];
         
         if mobileImagePreview is BlurhashPreview {
@@ -26,6 +27,7 @@ struct BookListItemModel {
     
     var _id: String
     var title: String?
+    var mobileImage: String?
     var mobileImagePreviewBase64: String?
     var mobileImagePreviewBlurhash: BlurhashPreview?
 }

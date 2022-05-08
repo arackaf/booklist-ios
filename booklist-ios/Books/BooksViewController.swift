@@ -37,9 +37,9 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
         
-
+        cell.coverImageView.translatesAutoresizingMaskIntoConstraints = true
         let book = books[indexPath.row]
-        //cell.titleLabel.text = book.title
+        cell.titleLabel.text = book.title
         //cell.junkLabel.isHidden = true
         
         //let coverImageView = UIImageView()
@@ -51,8 +51,16 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
             //DispatchQueue.main.sync {
             
 
-            //cell.coverImageView.frame.size = imageOnDisk.size
+            
+            cell.coverImageView.frame.size = imageOnDisk.size
             cell.coverImageView.image = imageOnDisk
+            cell.coverImageView.layoutIfNeeded()
+            
+            
+//            cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+//            cell.coverImageView.setNeedsDisplay()
+            
+            
             
 //            NSLayoutConstraint.activate([
 //                cell.coverImageView.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width),
@@ -61,6 +69,58 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             //}
         }
+        
+        // -----------------------------------------------------------------------------------------
+        
+        
+        if let mobileImage = book.mobileImage,
+           let urlToDownload = URL(string: mobileImage) {
+
+            
+            
+            print("Attempting:", urlToDownload)
+            URLSession.shared.downloadTask(with: urlToDownload) { (tempFileUrl, response, error) in
+                print("CALLBACK")
+                if let imageTempFileUrl = tempFileUrl {
+                    do {
+                        let imageName = documentDirectory.appendingPathComponent(book._id + ".jpg")
+                        let imageData = try Data(contentsOf: imageTempFileUrl)
+                        try imageData.write(to: imageName)
+                        print("DONE!!!")
+                        print(imageName)
+                        
+                        print("----")
+
+                        
+                        let imgData = try? Data(contentsOf:imageName)
+                        guard let imageOnDisk = UIImage(data:imgData!) else {
+                            print("Couldn't get image")
+                            return
+                        }
+                        
+                        DispatchQueue.main.sync {
+                            cell.coverImageView.image = imageOnDisk
+                            cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+                        }
+                    } catch {
+                        print("Error")
+                    }
+                } else {
+                    print("Top error")
+                }
+            }.resume()
+        }
+        
+        
+        // ---------------------------------------------------------------------------------------------
+        
+        
+        
+        
+        
+
+
+        
         //cell.coverContainer.addSubview(coverImageView)
         //cell.coverContainer.sizeToFit()
         cell.sizeToFit()
@@ -70,7 +130,7 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if indexPath.row == 3 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 //cell.junkLabel.isHidden = false
-                cell.sizeToFit()
+                //cell.sizeToFit()
             }
         }
         

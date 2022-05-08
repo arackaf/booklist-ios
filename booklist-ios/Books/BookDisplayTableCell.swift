@@ -20,6 +20,8 @@ class BookDisplayTableCell: UITableViewCell {
     
     @IBOutlet var coverImageView: UIImageView!
     
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var coverContainer: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
