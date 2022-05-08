@@ -19,14 +19,13 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EjZ-n6-AaV">
                         <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KZ5-RY-nbn" customClass="ScaledImageView" customModule="booklist_ios" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KZ5-RY-nbn">
                                 <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="DGK-Kq-Ij4"/>
                             <constraint firstItem="KZ5-RY-nbn" firstAttribute="top" secondItem="EjZ-n6-AaV" secondAttribute="top" id="I6E-9f-iLZ"/>
-                            <constraint firstItem="KZ5-RY-nbn" firstAttribute="leading" secondItem="EjZ-n6-AaV" secondAttribute="leading" id="Tnl-1h-va6"/>
+                            <constraint firstAttribute="width" constant="60" id="KPJ-7h-g4i"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -34,8 +33,13 @@
                     <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5bR-Wi-URq"/>
                     <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6jo-OH-9ac"/>
                     <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DDf-O7-Pvk"/>
+                    <constraint firstAttribute="bottom" secondItem="EjZ-n6-AaV" secondAttribute="bottom" id="LTz-cf-rLp"/>
                     <constraint firstAttribute="bottom" secondItem="EjZ-n6-AaV" secondAttribute="bottom" id="b5Q-Ll-5Pn"/>
+                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ntf-Z2-YMf"/>
+                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="s4O-hq-df9"/>
+                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="uLE-HB-42G"/>
                     <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="v8B-Sg-OyA"/>
+                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xHw-sz-aXh"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
