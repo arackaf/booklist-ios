@@ -16,36 +16,58 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EjZ-n6-AaV">
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQ5-ds-2aE">
                         <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KZ5-RY-nbn">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nnf-jv-oX8">
                                 <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mLA-5c-l5b">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mLA-5c-l5b" firstAttribute="leading" secondItem="nnf-jv-oX8" secondAttribute="leading" id="hQF-Dz-L4r"/>
+                                    <constraint firstItem="mLA-5c-l5b" firstAttribute="top" secondItem="nnf-jv-oX8" secondAttribute="top" id="xsP-Cy-tCi"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="KZ5-RY-nbn" firstAttribute="top" secondItem="EjZ-n6-AaV" secondAttribute="top" id="I6E-9f-iLZ"/>
-                            <constraint firstAttribute="width" constant="60" id="KPJ-7h-g4i"/>
+                            <constraint firstItem="nnf-jv-oX8" firstAttribute="top" secondItem="MQ5-ds-2aE" secondAttribute="top" id="Cdd-1i-zze"/>
+                            <constraint firstItem="nnf-jv-oX8" firstAttribute="leading" secondItem="MQ5-ds-2aE" secondAttribute="leading" id="DBW-U2-Uvn"/>
+                            <constraint firstAttribute="bottom" secondItem="nnf-jv-oX8" secondAttribute="bottom" id="Slv-un-eca"/>
+                            <constraint firstAttribute="width" constant="60" id="TeX-jM-SDC"/>
+                            <constraint firstAttribute="bottom" secondItem="nnf-jv-oX8" secondAttribute="bottom" id="TgI-TU-0cw"/>
+                            <constraint firstItem="nnf-jv-oX8" firstAttribute="top" secondItem="MQ5-ds-2aE" secondAttribute="top" id="h9c-El-bda"/>
                         </constraints>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V0P-ae-jXg">
+                        <rect key="frame" x="60" y="0.0" width="260" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wk0-ja-pvF">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5bR-Wi-URq"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6jo-OH-9ac"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DDf-O7-Pvk"/>
-                    <constraint firstAttribute="bottom" secondItem="EjZ-n6-AaV" secondAttribute="bottom" id="LTz-cf-rLp"/>
-                    <constraint firstAttribute="bottom" secondItem="EjZ-n6-AaV" secondAttribute="bottom" id="b5Q-Ll-5Pn"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ntf-Z2-YMf"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="s4O-hq-df9"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="uLE-HB-42G"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="v8B-Sg-OyA"/>
-                    <constraint firstItem="EjZ-n6-AaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xHw-sz-aXh"/>
+                    <constraint firstItem="MQ5-ds-2aE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5tl-gD-eRX"/>
+                    <constraint firstAttribute="bottom" secondItem="MQ5-ds-2aE" secondAttribute="bottom" id="Ga9-RS-soM"/>
+                    <constraint firstItem="V0P-ae-jXg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="KhU-Sa-Tgz"/>
+                    <constraint firstItem="MQ5-ds-2aE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VPI-RE-UXH"/>
+                    <constraint firstAttribute="trailing" secondItem="V0P-ae-jXg" secondAttribute="trailing" id="hkk-Xw-Oij"/>
+                    <constraint firstItem="MQ5-ds-2aE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iMN-s4-ZKE"/>
+                    <constraint firstItem="MQ5-ds-2aE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="myx-ZT-6yw"/>
+                    <constraint firstItem="V0P-ae-jXg" firstAttribute="leading" secondItem="MQ5-ds-2aE" secondAttribute="trailing" id="ncU-6j-2Dk"/>
+                    <constraint firstAttribute="bottom" secondItem="V0P-ae-jXg" secondAttribute="bottom" id="r9M-de-znS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="coverContainer" destination="EjZ-n6-AaV" id="fym-zo-hJ4"/>
-                <outlet property="coverImageView" destination="KZ5-RY-nbn" id="e1z-cf-JD8"/>
+                <outlet property="coverImageView" destination="mLA-5c-l5b" id="hw5-fA-2JN"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="71.651785714285708"/>
         </tableViewCell>
