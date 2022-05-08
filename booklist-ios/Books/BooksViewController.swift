@@ -28,8 +28,8 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         booksTableView.layoutMargins = UIEdgeInsets.zero
         booksTableView.separatorInset = UIEdgeInsets.zero
         
-//        booksTableView.estimatedRowHeight = UITableView.automaticDimension
-//        booksTableView.rowHeight = UITableView.automaticDimension
+        booksTableView.estimatedRowHeight = UITableView.automaticDimension
+        booksTableView.rowHeight = UITableView.automaticDimension
         
         search("")
     }
@@ -37,7 +37,8 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookDisplayTableCell.identifier, for: indexPath) as! BookDisplayTableCell
         
-        cell.coverImageView.translatesAutoresizingMaskIntoConstraints = true
+        //cell.translatesAutoresizingMaskIntoConstraints = false
+        //cell.contentView.translatesAutoresizingMaskIntoConstraints = false
         let book = books[indexPath.row]
         cell.titleLabel.text = book.title
         //cell.junkLabel.isHidden = true
@@ -51,23 +52,15 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
             //DispatchQueue.main.sync {
             
 
+            let img = UIImageView()
+            //img.translatesAutoresizingMaskIntoConstraints = true
+            img.contentMode = .left
+            img.image = imageOnDisk
             
-            cell.coverImageView.frame.size = imageOnDisk.size
-            cell.coverImageView.image = imageOnDisk
-            cell.coverImageView.layoutIfNeeded()
-            
-            
-//            cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
-//            cell.coverImageView.setNeedsDisplay()
-            
-            
-            
-//            NSLayoutConstraint.activate([
-//                cell.coverImageView.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width),
-//                cell.coverImageView.heightAnchor.constraint(equalToConstant: imageOnDisk.size.height),
-//            ]);
-            
-            //}
+            //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+            //img.frame.size = imageOnDisk.size
+            cell.coverContainer.addArrangedSubview(img)
+            cell.coverContainerHeight.constant = imageOnDisk.size.height
         }
         
         // -----------------------------------------------------------------------------------------
@@ -78,18 +71,14 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
 
             
             
-            print("Attempting:", urlToDownload)
+
             URLSession.shared.downloadTask(with: urlToDownload) { (tempFileUrl, response, error) in
-                print("CALLBACK")
+
                 if let imageTempFileUrl = tempFileUrl {
                     do {
                         let imageName = documentDirectory.appendingPathComponent(book._id + ".jpg")
                         let imageData = try Data(contentsOf: imageTempFileUrl)
                         try imageData.write(to: imageName)
-                        print("DONE!!!")
-                        print(imageName)
-                        
-                        print("----")
 
                         
                         let imgData = try? Data(contentsOf:imageName)
@@ -99,8 +88,37 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
                         }
                         
                         DispatchQueue.main.sync {
-                            cell.coverImageView.image = imageOnDisk
-                            cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+                            
+                            print("About to remove")
+                            for item in cell.coverContainer.arrangedSubviews {
+                                print("removing")
+                                item.removeFromSuperview()
+                            }
+                            cell.coverContainerHeight.constant = 150
+                            //cell.layoutSubviews()
+                            //cell.coverContainer.sizeToFit()
+                            //cell.sizeToFit()
+                            //cell.coverContainer.removeFromSuperview()
+                            //cell.sizeToFit()
+//
+                            //let img = UIImageView()
+                            //img.contentMode = .scaleAspectFit
+
+                            //img.image = imageOnDisk
+
+                            //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+                            //cell.coverContainer.addSubview(img)
+//
+                            //NSLayoutConstraint.activate([
+                                //img.topAnchor.constraint(equalTo: cell.coverContainer.topAnchor),
+                                //img.leadingAnchor.constraint(equalTo: cell.coverContainer.leadingAnchor),
+                                //img.trailingAnchor.constraint(equalTo: cell.coverContainer.trailingAnchor),
+                                //img.bottomAnchor.constraint(equalTo: cell.coverContainer.bottomAnchor),
+                                //img.heightAnchor.constraint(equalToConstant: imageOnDisk.size.height),
+                            //])
+                            
+                            //cell.coverImageView.image = imageOnDisk
+                            //cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
                         }
                     } catch {
                         print("Error")

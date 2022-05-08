@@ -18,11 +18,10 @@ class BookDisplayTableCell: UITableViewCell {
 //    @IBOutlet var coverContainer: UIStackView!
 //    @IBOutlet var coverImageView: UIImageView!
     
-    @IBOutlet var coverImageView: UIImageView!
-    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var coverContainer: UIStackView!
     
+    @IBOutlet var coverContainerHeight: NSLayoutConstraint!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -18,36 +18,31 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQ5-ds-2aE">
-                        <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nnf-jv-oX8">
-                                <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mLA-5c-l5b">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemMintColor"/>
-                                    </imageView>
-                                </subviews>
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
-                                    <constraint firstItem="mLA-5c-l5b" firstAttribute="leading" secondItem="nnf-jv-oX8" secondAttribute="leading" id="hQF-Dz-L4r"/>
-                                    <constraint firstItem="mLA-5c-l5b" firstAttribute="top" secondItem="nnf-jv-oX8" secondAttribute="top" id="xsP-Cy-tCi"/>
+                                    <constraint firstAttribute="height" constant="30" id="vPq-GQ-9c1"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="nnf-jv-oX8" firstAttribute="top" secondItem="MQ5-ds-2aE" secondAttribute="top" id="Cdd-1i-zze"/>
                             <constraint firstItem="nnf-jv-oX8" firstAttribute="leading" secondItem="MQ5-ds-2aE" secondAttribute="leading" id="DBW-U2-Uvn"/>
-                            <constraint firstAttribute="bottom" secondItem="nnf-jv-oX8" secondAttribute="bottom" id="Slv-un-eca"/>
                             <constraint firstAttribute="width" constant="60" id="TeX-jM-SDC"/>
-                            <constraint firstAttribute="bottom" secondItem="nnf-jv-oX8" secondAttribute="bottom" id="TgI-TU-0cw"/>
                             <constraint firstItem="nnf-jv-oX8" firstAttribute="top" secondItem="MQ5-ds-2aE" secondAttribute="top" id="h9c-El-bda"/>
                         </constraints>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V0P-ae-jXg">
-                        <rect key="frame" x="60" y="0.0" width="260" height="44"/>
+                        <rect key="frame" x="60" y="0.0" width="260" height="30"/>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PWP-IQ-9ru">
+                        <rect key="frame" x="120" y="0.0" width="200" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wk0-ja-pvF">
-                                <rect key="frame" x="0.0" y="0.0" width="260" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -56,29 +51,33 @@
                     </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="PWP-IQ-9ru" secondAttribute="bottom" id="1gv-jp-86b"/>
                     <constraint firstItem="MQ5-ds-2aE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5tl-gD-eRX"/>
                     <constraint firstAttribute="bottom" secondItem="MQ5-ds-2aE" secondAttribute="bottom" id="Ga9-RS-soM"/>
                     <constraint firstItem="V0P-ae-jXg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="KhU-Sa-Tgz"/>
+                    <constraint firstAttribute="trailing" secondItem="PWP-IQ-9ru" secondAttribute="trailing" id="MSC-3J-pcz"/>
+                    <constraint firstItem="PWP-IQ-9ru" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="RKj-Ze-g3X"/>
                     <constraint firstItem="MQ5-ds-2aE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VPI-RE-UXH"/>
                     <constraint firstAttribute="trailing" secondItem="V0P-ae-jXg" secondAttribute="trailing" id="hkk-Xw-Oij"/>
                     <constraint firstItem="MQ5-ds-2aE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iMN-s4-ZKE"/>
                     <constraint firstItem="MQ5-ds-2aE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="myx-ZT-6yw"/>
                     <constraint firstItem="V0P-ae-jXg" firstAttribute="leading" secondItem="MQ5-ds-2aE" secondAttribute="trailing" id="ncU-6j-2Dk"/>
                     <constraint firstAttribute="bottom" secondItem="V0P-ae-jXg" secondAttribute="bottom" id="r9M-de-znS"/>
+                    <constraint firstItem="PWP-IQ-9ru" firstAttribute="leading" secondItem="MQ5-ds-2aE" secondAttribute="trailing" constant="60" id="vrV-kU-W3T"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="coverContainer" destination="nnf-jv-oX8" id="ta1-MH-F2w"/>
-                <outlet property="coverImageView" destination="mLA-5c-l5b" id="hw5-fA-2JN"/>
+                <outlet property="coverContainerHeight" destination="vPq-GQ-9c1" id="wRN-4s-hhR"/>
                 <outlet property="titleLabel" destination="Wk0-ja-pvF" id="SS3-A9-Urf"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="71.651785714285708"/>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
