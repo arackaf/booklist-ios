@@ -54,17 +54,27 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let imageOnDisk = UIImage(data:imgData!) {
             //DispatchQueue.main.sync {
             
+            //cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+            //cell.coverImageView.image = imageOnDisk
 
             let img = UIImageView()
             //img.translatesAutoresizingMaskIntoConstraints = true
-            img.contentMode = .left
+            
+            
+            cell.coverContainer.addArrangedSubview(img)
+            //img.topAnchor.constraint(equalTo: cell.coverContainer.topAnchor).isActive = true
+            //img.leftAnchor.constraint(equalTo: cell.coverContainer.leftAnchor).isActive = true
+            //img.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width).isActive = true
+            
+            img.contentMode = .scaleAspectFit
             img.image = imageOnDisk
+            img.backgroundColor = UIColor(red:255, green: 0, blue: 0, alpha: 1)
             
             //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
             //img.frame.size = imageOnDisk.size
             
             //if (!rowsUpdated.contains(indexPath.row)){
-                cell.coverContainer.addArrangedSubview(img)
+                
             //}
             //cell.coverContainerHeight.constant = imageOnDisk.size.height
         }

@@ -20,6 +20,7 @@ class BookDisplayTableCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var coverContainer: UIStackView!
+
     
     //@IBOutlet var coverContainerHeight: NSLayoutConstraint!
     override func awakeFromNib() {
