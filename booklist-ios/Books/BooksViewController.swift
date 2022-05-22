@@ -52,31 +52,12 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let imgData = try? Data(contentsOf:imageName)
         if let imageOnDisk = UIImage(data:imgData!) {
-            //DispatchQueue.main.sync {
-            
-            //cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
-            //cell.coverImageView.image = imageOnDisk
-
             let img = UIImageView()
-            //img.translatesAutoresizingMaskIntoConstraints = true
-            
             
             cell.coverContainer.addArrangedSubview(img)
-            //img.topAnchor.constraint(equalTo: cell.coverContainer.topAnchor).isActive = true
-            //img.leftAnchor.constraint(equalTo: cell.coverContainer.leftAnchor).isActive = true
-            //img.widthAnchor.constraint(equalToConstant: imageOnDisk.size.width).isActive = true
-            
             img.contentMode = .scaleAspectFit
             img.image = imageOnDisk
             img.backgroundColor = UIColor(red:255, green: 0, blue: 0, alpha: 1)
-            
-            //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
-            //img.frame.size = imageOnDisk.size
-            
-            //if (!rowsUpdated.contains(indexPath.row)){
-                
-            //}
-            //cell.coverContainerHeight.constant = imageOnDisk.size.height
         }
         
         // -----------------------------------------------------------------------------------------
@@ -85,8 +66,6 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let mobileImage = book.mobileImage,
            let urlToDownload = URL(string: mobileImage) {
 
-            
-            
             if (!rowsUpdated.contains(indexPath.row)) {
                 rowsUpdated.insert(indexPath.row)
                 URLSession.shared.downloadTask(with: urlToDownload) { (tempFileUrl, response, error) in
@@ -106,38 +85,13 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
                             }
                             
                             DispatchQueue.main.sync {
-                                
                                 print("About to remove")
                                 for item in cell.coverContainer.arrangedSubviews {
                                     print("removing")
                                     item.removeFromSuperview()
                                 }
-                                //cell.coverContainer.removeFromSuperview()
-                                //cell.coverContainerHeight.constant = 150
-                                //cell.layoutSubviews()
-                                //cell.coverContainer.sizeToFit()
-                                //cell.sizeToFit()
-                                //cell.coverContainer.removeFromSuperview()
-                                //cell.sizeToFit()
-                                tableView.reloadRows(at: [indexPath], with: .none)
-    //
-                                //let img = UIImageView()
-                                //img.contentMode = .left
-                                //img.image = imageOnDisk
 
-                                //img.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
-                                //cell.coverContainer.addSubview(img)
-    //
-                                //NSLayoutConstraint.activate([
-                                    //img.topAnchor.constraint(equalTo: cell.coverContainer.topAnchor),
-                                    //img.leadingAnchor.constraint(equalTo: cell.coverContainer.leadingAnchor),
-                                    //img.trailingAnchor.constraint(equalTo: cell.coverContainer.trailingAnchor),
-                                    //img.bottomAnchor.constraint(equalTo: cell.coverContainer.bottomAnchor),
-                                    //img.heightAnchor.constraint(equalToConstant: imageOnDisk.size.height),
-                                //])
-                                
-                                //cell.coverImageView.image = imageOnDisk
-                                //cell.coverImageView.frame = CGRect(x: 0, y: 0, width: imageOnDisk.size.width, height: imageOnDisk.size.height)
+                                tableView.reloadRows(at: [indexPath], with: .none)
                             }
                         } catch {
                             print("Error")
@@ -148,30 +102,7 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 }.resume()
             }
         }
-        
-        
-        // ---------------------------------------------------------------------------------------------
-        
-        
-        
-        
-        
-
-
-        
-        //cell.coverContainer.addSubview(coverImageView)
-        //cell.coverContainer.sizeToFit()
         cell.sizeToFit()
-
-        //cell.coverContainer.sizeToFit()
-        
-        if indexPath.row == 3 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                //cell.junkLabel.isHidden = false
-                //cell.sizeToFit()
-            }
-        }
-        
         return cell
     }
     
@@ -203,15 +134,12 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
             } else {
                 print("oops")
             }
-            
         }
 
         task.resume()
     }
     
     @IBAction func onDumbClick(_ sender: Any) {
-        //  self.topLabel.text = "Ayoooooo"
-        
         let url = URL(string: "https://mylibrary.io/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CsmallImage%7D%7D%7D%0A%0A")!
 
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
