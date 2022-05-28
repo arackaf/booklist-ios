@@ -116,7 +116,9 @@ class BooksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func search(_ text: String) {
-        let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CmobileImage%2CmobileImagePreview%7D%7D%7D%0A";
+        //let query = "https://mylibrary.onrender.com/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CmobileImage%2CmobileImagePreview%7D%7D%7D%0A";
+        //let query = "https://mylibrary.onrender.com/graphql?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CmobileImage%2CmobileImagePreview%7D%7D%7D%0A";
+        let query = "http://localhost:3001/graphql-public?query=%7BallBooks%7BBooks%7B_id%2Ctitle%2CmobileImage%2CmobileImagePreview%7D%7D%7D%0A";
         let url = URL(string: query)!
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
