@@ -12,6 +12,11 @@ struct Login: Codable {
     let password: String
 }
 
+struct GraphqlQueryRequest: Codable {
+    let loginToken: String
+    let query: String
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet var mainLabel: UILabel!
@@ -39,6 +44,7 @@ class ViewController: UIViewController {
         
         URLSession.shared.dataTask(with: loginTokenRequest) { data, response, error in
             print("ehhhhh")
+            var loginToken: String? = ""
             guard error == nil else {
                 print("Error: error calling POST")
                 print(error!)
@@ -69,13 +75,17 @@ class ViewController: UIViewController {
                 }
                 
                 guard let respData: [String: Any] = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    print("No serialization :(")
                     return
                 }
                 
-                guard let loginToken: String = respData["loginToken"] as? String else {
+                loginToken = respData["loginToken"] as? String
+                guard let _ = loginToken else {
                     print("no login token")
                     return
                 }
+                
+                print(loginToken);
                 
             } catch {
                 print("Error: Trying to convert JSON data to string")
@@ -86,58 +96,61 @@ class ViewController: UIViewController {
                 
                 
                 
-                
-                let graphqlUrl = URL(string: "https://mylibrary.onrender.com/graphql-ios")!
-                var graphqlRequest = URLRequest(url: graphqlUrl)
-                graphqlRequest.httpMethod = "POST"
-                graphqlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type") // the request is JSON
-                graphqlRequest.setValue("application/json", forHTTPHeaderField: "Accept") // the response expected to be in JSON format
-                graphqlRequest.httpBody = loginRequestPacket
-                
-                URLSession.shared.dataTask(with: loginTokenRequest) { data, response, error in
-                    print("ehhhhh")
-                    guard error == nil else {
-                        print("Error: error calling POST")
-                        print(error!)
-                        return
-                    }
-                    guard let data = data else {
-                        print("Error: Did not receive data")
-                        return
-                    }
-                    guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-                        print("HTTP request not 200")
-                        return
-                    }
-                    do {
-                        guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                            print("Error: Cannot convert data to JSON object")
-                            print("\n\n")
-                            print(data)
-                            return
-                        }
-                        guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-                            print("Error: Cannot convert JSON object to Pretty JSON data")
-                            return
-                        }
-                        guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-                            print("Error: Couldn't print JSON in String")
-                            return
-                        }
-                        
-                        guard let respData: [String: Any] = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                            return
-                        }
-                        
-                        guard let loginToken: String = respData["loginToken"] as? String else {
-                            print("no login token")
-                            return
-                        }
-                    } catch {
-                        print("Error: Trying to convert JSON data to string")
-                        return
-                    }
+            let query = """
+            {
+              allBooks {
+                Books {
+                  _id
+                  title
+                  smallImage
+                  smallImagePreview
                 }
+              }
+            }
+            """
+        
+            let queryPacket = GraphqlQueryRequest(loginToken: loginToken!, query: query);
+                        
+            // Convert model to JSON data
+            guard let queryRequestPacket = try? JSONEncoder().encode(queryPacket) else {
+                print("Error: Trying to convert model to JSON data")
+                return
+            }
+            let graphqlUrl = URL(string: "https://mylibrary.onrender.com/graphql-ios")!
+            var graphqlRequest = URLRequest(url: graphqlUrl)
+            graphqlRequest.httpMethod = "POST"
+            graphqlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type") // the request is JSON
+            graphqlRequest.setValue("application/json", forHTTPHeaderField: "Accept") // the response expected to be in JSON format
+            graphqlRequest.httpBody = queryRequestPacket
+                
+        
+            
+        
+            URLSession.shared.dataTask(with: graphqlRequest) { (data, response, error) in
+                print("graphql callback")
+                guard error == nil else {
+                    print("Error: error calling POST")
+                    print(error!)
+                    return
+                }
+                guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
+                    print("HTTP request not 200")
+                    return
+                }
+
+                if let data = data,
+                   let json = try? JSONSerialization.jsonObject(with: data) as? [String:Any],
+                   let data = json["data"] as? [String:Any],
+                   let querySet = data["allBooks"] as? [String:Any],
+                   let results = querySet["Books"] as? [[String:Any]] {
+                    
+                   let books = results.map { BookListItemModel($0) }
+                   
+                    print(books)
+                } else {
+                    print("couldn't serialize books")
+                }
+            }.resume()
         
                 
                 
