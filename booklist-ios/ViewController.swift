@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import temp_pkg
+import temp2
 
 struct Login: Codable {
     let email: String
@@ -22,7 +24,14 @@ class ViewController: UIViewController {
     @IBOutlet var mainLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let junk2 = temp2.JunkStruct(val: "TEMP2")
+        
+        let inst = temp_pkg.JunkClass()
+        self.mainLabel.text = inst.val + " " + junk2.val
 
+        
+        
         let url = URL(string: "https://d193qjyckdxivp.cloudfront.net/small-covers/573d1b97120426ef0078aa92/f09c52a1-b0ce-4557-8c4c-3d12e38d226b.jpg")!
         let loginUrl = URL(string: "https://mylibrary.onrender.com/login-ios")!
         
