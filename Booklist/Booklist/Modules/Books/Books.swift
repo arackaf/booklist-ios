@@ -7,6 +7,28 @@
 
 import SwiftUI
 
+struct ImageData : Codable {
+    let h: Int
+    let w: Int
+    let b64: String
+}
+
+struct Book : Codable {
+    let id: Int
+    let title: String
+    let pages: Int
+    let authors: [String]
+    let smallImage: String
+    let smallImagePreview: ImageData
+}
+
+struct BookResults: Codable {
+    let books: [Book]
+    let totalBooks: Int
+    let page: Int
+    let totalPages: Int
+}
+
 struct Books: View {
     var body: some View {
         Text("Books").task(priority: .background) {
@@ -26,7 +48,16 @@ struct Books: View {
                     print(error?.localizedDescription)
                     return
                 }
-                print(data)
+                
+                if let data {
+                    let decoder = JSONDecoder()
+                    do {
+                        let j = try decoder.decode(BookResults.self, from: data)
+                        print(j)
+                    } catch {
+                        print("Error decoding:", error)
+                    }
+                }
                 
             }.resume()
         }
