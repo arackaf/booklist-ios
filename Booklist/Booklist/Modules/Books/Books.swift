@@ -51,7 +51,6 @@ struct Books: View {
                                             .frame(
                                                 maxWidth: 50,
                                                 alignment: .leading
-                                                //maxHeight: smallImageInfo.h as! CGFloat?
                                             )
                                     },
                                     placeholder: {
@@ -61,11 +60,12 @@ struct Books: View {
                             } else {
                                 Text("No image")
                             }
-                            Spacer()
-                        }.frame(maxWidth: 50)
+                        }.frame(minWidth: 50, maxWidth: 50)
                         VStack(alignment: .leading, spacing: 5) {
                             Text(book.title)
-                            Text(book.authors.joined(separator: ", ")).font(.subheadline.italic())
+                            Text(book.authors.joined(separator: ", "))
+                                .font(.subheadline.italic())
+                                .padding(.leading, 5)
                         }
                     }
                 }
