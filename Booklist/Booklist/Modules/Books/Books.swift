@@ -63,12 +63,12 @@ struct Books: View {
                             }
                             Spacer()
                         }.frame(maxWidth: 50)
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text(book.title)
-                            Text("Authors").frame(alignment: .leading)
+                            Spacer().frame(maxHeight: 5)
+                            Text(book.authors.joined(separator: ", ")).font(.subheadline.italic())
                             Spacer()
-                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                            .background(.red)
+                        }
                     }
                 }
             }
