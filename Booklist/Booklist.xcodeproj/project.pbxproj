@@ -14,6 +14,8 @@
 		17C25FB229D3192300F2D9C0 /* BooklistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FB129D3192300F2D9C0 /* BooklistTests.swift */; };
 		17C25FBC29D3192300F2D9C0 /* BooklistUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FBB29D3192300F2D9C0 /* BooklistUITests.swift */; };
 		17C25FBE29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FBD29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift */; };
+		17C25FCD29D31C6C00F2D9C0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FCC29D31C6C00F2D9C0 /* Settings.swift */; };
+		17C25FCF29D31CA600F2D9C0 /* Books.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FCE29D31CA600F2D9C0 /* Books.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		17C25FB729D3192300F2D9C0 /* BooklistUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BooklistUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C25FBB29D3192300F2D9C0 /* BooklistUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistUITests.swift; sourceTree = "<group>"; };
 		17C25FBD29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		17C25FCC29D31C6C00F2D9C0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		17C25FCE29D31CA600F2D9C0 /* Books.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Books.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 		17C25F9F29D3192000F2D9C0 /* Booklist */ = {
 			isa = PBXGroup;
 			children = (
+				17C25FCB29D31C5300F2D9C0 /* Settings */,
+				17C25FCA29D31C4900F2D9C0 /* Books */,
 				17C25FA029D3192000F2D9C0 /* BooklistApp.swift */,
 				17C25FA229D3192000F2D9C0 /* Home.swift */,
 				17C25FA429D3192300F2D9C0 /* Assets.xcassets */,
@@ -125,6 +131,22 @@
 				17C25FBD29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift */,
 			);
 			path = BooklistUITests;
+			sourceTree = "<group>";
+		};
+		17C25FCA29D31C4900F2D9C0 /* Books */ = {
+			isa = PBXGroup;
+			children = (
+				17C25FCE29D31CA600F2D9C0 /* Books.swift */,
+			);
+			path = Books;
+			sourceTree = "<group>";
+		};
+		17C25FCB29D31C5300F2D9C0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				17C25FCC29D31C6C00F2D9C0 /* Settings.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +279,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C25FCF29D31CA600F2D9C0 /* Books.swift in Sources */,
+				17C25FCD29D31C6C00F2D9C0 /* Settings.swift in Sources */,
 				17C25FA329D3192000F2D9C0 /* Home.swift in Sources */,
 				17C25FA129D3192000F2D9C0 /* BooklistApp.swift in Sources */,
 			);
