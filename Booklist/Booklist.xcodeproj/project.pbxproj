@@ -98,8 +98,8 @@
 		17C25F9F29D3192000F2D9C0 /* Booklist */ = {
 			isa = PBXGroup;
 			children = (
-				17C25FCB29D31C5300F2D9C0 /* Settings */,
-				17C25FCA29D31C4900F2D9C0 /* Books */,
+				17C25FD129D320E000F2D9C0 /* Data */,
+				17C25FD029D320C300F2D9C0 /* Modules */,
 				17C25FA029D3192000F2D9C0 /* BooklistApp.swift */,
 				17C25FA229D3192000F2D9C0 /* Home.swift */,
 				17C25FA429D3192300F2D9C0 /* Assets.xcassets */,
@@ -147,6 +147,22 @@
 				17C25FCC29D31C6C00F2D9C0 /* Settings.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		17C25FD029D320C300F2D9C0 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				17C25FCA29D31C4900F2D9C0 /* Books */,
+				17C25FCB29D31C5300F2D9C0 /* Settings */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		17C25FD129D320E000F2D9C0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
