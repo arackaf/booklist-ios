@@ -13,13 +13,13 @@ struct ImageData : Codable {
     let b64: String
 }
 
-struct Book : Codable {
+struct Book : Codable, Identifiable {
     let id: Int
     let title: String
     let pages: Int
     let authors: [String]
-    let smallImage: String
-    let smallImagePreview: ImageData
+    let smallImage: String?
+    let smallImagePreview: ImageData?
 }
 
 struct BookResults: Codable {
@@ -30,8 +30,49 @@ struct BookResults: Codable {
 }
 
 struct Books: View {
+    @State private var bookResults: BookResults?
+    
     var body: some View {
-        Text("Books").task(priority: .background) {
+        VStack{
+            if bookResults == nil {
+                Text("Loading ...")
+            } else {
+                List(bookResults!.books) { book in
+                    HStack {
+                        VStack{
+                            if let smallImage = book.smallImage,
+                               let smallImageInfo = book.smallImagePreview {
+                                
+                                AsyncImage(
+                                    url: URL(string: smallImage),
+                                    content: { image in
+                                        image.resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(
+                                                maxWidth: 50,
+                                                alignment: .leading
+                                                //maxHeight: smallImageInfo.h as! CGFloat?
+                                            )
+                                    },
+                                    placeholder: {
+                                        Text("...")
+                                    }
+                                )
+                            } else {
+                                Text("No image")
+                            }
+                            Spacer()
+                        }.frame(maxWidth: 50)
+                        VStack {
+                            Text(book.title)
+                            Text("Authors").frame(alignment: .leading)
+                            Spacer()
+                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                            .background(.red)
+                    }
+                }
+            }
+        }.task(priority: .background) {
             print("a")
             let url = URL(string: "https://mylibrary.io/api/books-public")!
             var request = URLRequest(url: url)
@@ -52,8 +93,7 @@ struct Books: View {
                 if let data {
                     let decoder = JSONDecoder()
                     do {
-                        let j = try decoder.decode(BookResults.self, from: data)
-                        print(j)
+                        self.bookResults = try decoder.decode(BookResults.self, from: data)
                     } catch {
                         print("Error decoding:", error)
                     }
