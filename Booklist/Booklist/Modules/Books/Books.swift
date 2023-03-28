@@ -38,7 +38,7 @@ struct Books: View {
                 Text("Loading ...")
             } else {
                 List(bookResults!.books) { book in
-                    HStack {
+                    HStack(alignment: .top, spacing: 10) {
                         VStack{
                             if let smallImage = book.smallImage,
                                let smallImageInfo = book.smallImagePreview {
@@ -63,11 +63,9 @@ struct Books: View {
                             }
                             Spacer()
                         }.frame(maxWidth: 50)
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 5) {
                             Text(book.title)
-                            Spacer().frame(maxHeight: 5)
                             Text(book.authors.joined(separator: ", ")).font(.subheadline.italic())
-                            Spacer()
                         }
                     }
                 }
