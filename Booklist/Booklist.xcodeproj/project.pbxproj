@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17C25FA129D3192000F2D9C0 /* BooklistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FA029D3192000F2D9C0 /* BooklistApp.swift */; };
-		17C25FA329D3192000F2D9C0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FA229D3192000F2D9C0 /* ContentView.swift */; };
+		17C25FA329D3192000F2D9C0 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FA229D3192000F2D9C0 /* Home.swift */; };
 		17C25FA529D3192300F2D9C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C25FA429D3192300F2D9C0 /* Assets.xcassets */; };
 		17C25FA829D3192300F2D9C0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C25FA729D3192300F2D9C0 /* Preview Assets.xcassets */; };
 		17C25FB229D3192300F2D9C0 /* BooklistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FB129D3192300F2D9C0 /* BooklistTests.swift */; };
@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		17C25F9D29D3192000F2D9C0 /* Booklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booklist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C25FA029D3192000F2D9C0 /* BooklistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistApp.swift; sourceTree = "<group>"; };
-		17C25FA229D3192000F2D9C0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		17C25FA229D3192000F2D9C0 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		17C25FA429D3192300F2D9C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17C25FA729D3192300F2D9C0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		17C25FAD29D3192300F2D9C0 /* BooklistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BooklistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				17C25FA029D3192000F2D9C0 /* BooklistApp.swift */,
-				17C25FA229D3192000F2D9C0 /* ContentView.swift */,
+				17C25FA229D3192000F2D9C0 /* Home.swift */,
 				17C25FA429D3192300F2D9C0 /* Assets.xcassets */,
 				17C25FA629D3192300F2D9C0 /* Preview Content */,
 			);
@@ -257,7 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17C25FA329D3192000F2D9C0 /* ContentView.swift in Sources */,
+				17C25FA329D3192000F2D9C0 /* Home.swift in Sources */,
 				17C25FA129D3192000F2D9C0 /* BooklistApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
