@@ -45,7 +45,7 @@ struct Books: View {
                 print("Callback")
                 guard error == nil else {
                     print("error")
-                    print(error?.localizedDescription)
+                    print(String(describing: error?.localizedDescription))
                     return
                 }
                 
