@@ -53,16 +53,25 @@ class BookViewModel: ObservableObject, Identifiable {
     }
 }
 
+class BookPacket: ObservableObject {
+    @Published
+    var books: [BookViewModel]
+    
+    init(books: [BookViewModel]) {
+        self.books = books
+    }
+}
+
 struct Books: View {
     @State private var bookResults: BookResults?
-    @State private var books: [BookViewModel] = []
+    @StateObject private var bookPacket: BookPacket = BookPacket(books: [])
     
     var body: some View {
         VStack{
-            if bookResults == nil {
+            if bookPacket.books.isEmpty {
                 Text("Loading ...")
             } else {
-                List(bookResults!.books) { book in
+                List(bookPacket.books) { book in
                     HStack(alignment: .top, spacing: 10) {
                         VStack{
                             if let smallImage = book.smallImage,
