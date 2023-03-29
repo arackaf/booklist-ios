@@ -87,8 +87,13 @@ class BookViewModel: ObservableObject, Identifiable {
 
                 if let data = data {
                     print("GOT REAL IMAGE")
+
                     DispatchQueue.main.async { [weak self] in
-                        self?.imageReady = UIImage(data: data)
+                        Task.init {
+                            let delay = Double.random(in: 0.75...2.5)
+                            try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
+                            self?.imageReady = UIImage(data: data)
+                        }
                     }
                 }
             }.resume()
@@ -169,10 +174,21 @@ struct BooksDisplay: View {
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             VStack{
-                if let realImage = book.imageReady {
-                    Text("REAL IMAGE OMGGGG")
-                } else if let imageToRender = book.imagePreview,
+                if let realImage = book.imageReady,
                    let metadata = book.imageMetadata {
+                    
+                    Image(uiImage: realImage)
+                        .resizable()
+                        .frame(
+                            minWidth: CGFloat(metadata.width),
+                            maxWidth: CGFloat(metadata.width),
+                            minHeight: CGFloat(metadata.height),
+                            maxHeight: CGFloat(metadata.height),
+                            alignment: .leading
+                        )
+                } else if
+                    let imageToRender = book.imagePreview,
+                    let metadata = book.imageMetadata {
                     
                     Image(uiImage: imageToRender)
                         .resizable()
@@ -185,23 +201,6 @@ struct BooksDisplay: View {
                             maxHeight: CGFloat(metadata.height),
                             alignment: .leading
                         )
-                    
-                    
-//                        AsyncImage(
-//                            url: URL(string: imageUrl),
-//                            content: { image in
-//                                image.resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .frame(
-//                                        minWidth: CGFloat(metadata.width),
-//                                        maxWidth: CGFloat(metadata.width),
-//                                        alignment: .leading
-//                                    )
-//                            },
-//                            placeholder: {
-//                                Text("...")
-//                            }
-//                        )
                 } else {
                     Text("No image")
                 }
