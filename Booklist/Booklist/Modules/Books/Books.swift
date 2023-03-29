@@ -59,17 +59,6 @@ class BookViewModel: ObservableObject, Identifiable {
     init(_ book: Book) {
         self.book = book
         self.title = book.title
-        if let preview = book.smallImagePreview {
-            self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
-
-            if let range = preview.b64.range(of: "base64,"),
-               let data = Data(base64Encoded: String(preview.b64[range.upperBound...])),
-               let uiImage = UIImage(data: data) {
-                
-                print("YES")
-                self.imagePreview = uiImage
-            }
-        }
         
         if let authorsArr = book.authors, !authorsArr.isEmpty {
             self.authors = authorsArr.joined(separator: ", ")
@@ -77,7 +66,33 @@ class BookViewModel: ObservableObject, Identifiable {
             self.authors = ""
         }
         
-        
+        if let preview = book.smallImagePreview,
+           let imageUrl = book.smallImage,
+           let downloadUrl = URL(string: imageUrl) {
+            self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
+
+            if let range = preview.b64.range(of: "base64,"),
+               let data = Data(base64Encoded: String(preview.b64[range.upperBound...])),
+               let uiImage = UIImage(data: data) {
+                
+                self.imagePreview = uiImage
+            }
+            
+            print("downloading")
+            URLSession.shared.dataTask(with: downloadUrl) { (data, response, error) in
+                guard error == nil else {
+                    print("Error downloading image", error)
+                    return
+                }
+
+                if let data = data {
+                    print("GOT REAL IMAGE")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.imageReady = UIImage(data: data)
+                    }
+                }
+            }.resume()
+        }
     }
 }
 
@@ -146,7 +161,9 @@ struct BooksList: View {
             
             HStack(alignment: .top, spacing: 10) {
                 VStack{
-                    if let imageToRender = book.wrappedValue.imagePreview,
+                    if let realImage = book.wrappedValue.imageReady {
+                        Text("REAL IMAGE OMGGGG")
+                    } else if let imageToRender = book.wrappedValue.imagePreview,
                        let metadata = book.wrappedValue.imageMetadata {
                         
                         Image(uiImage: imageToRender)
