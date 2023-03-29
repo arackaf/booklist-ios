@@ -79,7 +79,6 @@ class BookPacket: ObservableObject {
 }
 
 struct Books: View {
-    @State private var bookResults: BookResults?
     @StateObject private var bookPacket: BookPacket = BookPacket(books: [])
     
     var body: some View {
@@ -87,41 +86,9 @@ struct Books: View {
             if bookPacket.books.isEmpty {
                 Text("Loading ...")
             } else {
-                List($bookPacket.books) { book in
-                    HStack(alignment: .top, spacing: 10) {
-                        VStack{
-                            if let smallImage = book.imageUrl.wrappedValue,
-                               let smallImageInfo = book.imageMetadata {
-                                
-                                AsyncImage(
-                                    url: URL(string: smallImage),
-                                    content: { image in
-                                        image.resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(
-                                                maxWidth: 50,
-                                                alignment: .leading
-                                            )
-                                    },
-                                    placeholder: {
-                                        Text("...")
-                                    }
-                                )
-                            } else {
-                                Text("No image")
-                            }
-                        }.frame(minWidth: 50, maxWidth: 50)
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(book.title.wrappedValue)
-                            Text("authors")
-                                .font(.subheadline.italic())
-                                .padding(.leading, 5)
-                        }
-                    }
-                }
+                BooksList(bookPacket: bookPacket)
             }
-        }.task(priority: .background) {
-            print("a")
+        }.task(priority: .userInitiated) {
             let url = URL(string: "https://mylibrary.io/api/books-public")!
             var request = URLRequest(url: url)
             
@@ -131,10 +98,8 @@ struct Books: View {
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             
             URLSession.shared.dataTask(with: request) { data, response, error in
-                print("Callback")
                 guard error == nil else {
-                    print("error")
-                    print(String(describing: error?.localizedDescription))
+                    print("Error loading books:", String(describing: error?.localizedDescription))
                     return
                 }
                 
@@ -143,12 +108,13 @@ struct Books: View {
                     do {
                         let results = try decoder.decode(BookResults.self, from: data)
                         
-                        self.bookPacket.books = results.books.map { BookViewModel($0) }
+                        DispatchQueue.main.async {
+                            self.bookPacket.books = results.books.map { BookViewModel($0) }
+                        }
                     } catch {
                         print("Error decoding:", error)
                     }
-                }
-                
+                }                
             }.resume()
         }
     }
@@ -157,5 +123,44 @@ struct Books: View {
 struct Books_Previews: PreviewProvider {
     static var previews: some View {
         Books()
+    }
+}
+
+struct BooksList: View {
+    @ObservedObject var bookPacket: BookPacket
+    
+    var body: some View {
+        List($bookPacket.books) { book in
+            HStack(alignment: .top, spacing: 10) {
+                VStack{
+                    if let smallImage = book.imageUrl.wrappedValue,
+                       let smallImageInfo = book.imageMetadata {
+                        
+                        AsyncImage(
+                            url: URL(string: smallImage),
+                            content: { image in
+                                image.resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(
+                                        maxWidth: 50,
+                                        alignment: .leading
+                                    )
+                            },
+                            placeholder: {
+                                Text("...")
+                            }
+                        )
+                    } else {
+                        Text("No image")
+                    }
+                }.frame(minWidth: 50, maxWidth: 50)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(book.title.wrappedValue)
+                    Text("authors")
+                        .font(.subheadline.italic())
+                        .padding(.leading, 5)
+                }
+            }
+        }
     }
 }
