@@ -41,6 +41,9 @@ class BookViewModel: ObservableObject, Identifiable {
     }
     
     @Published
+    var imageToRender: UIImage?
+    
+    @Published
     var title: String;
     
     @Published
@@ -59,6 +62,17 @@ class BookViewModel: ObservableObject, Identifiable {
         self.imageUrl = book.smallImage
         if let preview = book.smallImagePreview {
             self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
+            
+            print("PRE", preview.b64)
+
+        
+            if let range = preview.b64.range(of: "base64,"),
+               let data = Data(base64Encoded: String(preview.b64[range.upperBound...])),
+               let uiImage = UIImage(data: data) {
+                
+                print("YES")
+                self.imageToRender = uiImage
+            }
         }
         
         if let authorsArr = book.authors, !authorsArr.isEmpty {
@@ -66,6 +80,8 @@ class BookViewModel: ObservableObject, Identifiable {
         } else {
             self.authors = ""
         }
+        
+        
     }
 }
 
@@ -114,7 +130,7 @@ struct Books: View {
                     } catch {
                         print("Error decoding:", error)
                     }
-                }                
+                }
             }.resume()
         }
     }
@@ -131,25 +147,40 @@ struct BooksList: View {
     
     var body: some View {
         List($bookPacket.books) { book in
+            
             HStack(alignment: .top, spacing: 10) {
                 VStack{
-                    if let smallImage = book.imageUrl.wrappedValue,
-                       let smallImageInfo = book.imageMetadata {
+                    if let imageToRender = book.wrappedValue.imageToRender,
+                       let metadata = book.wrappedValue.imageMetadata {
                         
-                        AsyncImage(
-                            url: URL(string: smallImage),
-                            content: { image in
-                                image.resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(
-                                        maxWidth: 50,
-                                        alignment: .leading
-                                    )
-                            },
-                            placeholder: {
-                                Text("...")
-                            }
-                        )
+                        Image(uiImage: imageToRender)
+                            .resizable()
+                            .blur(radius: 5)
+                            .clipShape(Rectangle())
+                            .frame(
+                                minWidth: CGFloat(metadata.width),
+                                maxWidth: CGFloat(metadata.width),
+                                minHeight: CGFloat(metadata.height),
+                                maxHeight: CGFloat(metadata.height),
+                                alignment: .leading
+                            )
+                        
+                        
+//                        AsyncImage(
+//                            url: URL(string: imageUrl),
+//                            content: { image in
+//                                image.resizable()
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(
+//                                        minWidth: CGFloat(metadata.width),
+//                                        maxWidth: CGFloat(metadata.width),
+//                                        alignment: .leading
+//                                    )
+//                            },
+//                            placeholder: {
+//                                Text("...")
+//                            }
+//                        )
                     } else {
                         Text("No image")
                     }
