@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct ImageMetadata {
+    let width: Int
+    let height: Int
+    let preview: String
+}
+
 struct ImageData : Codable {
     let h: Int
     let w: Int
@@ -40,10 +46,20 @@ class BookViewModel: ObservableObject, Identifiable {
     @Published
     var authors: String
     
+    @Published
+    var imageUrl: String?
+    
+    @Published
+    var imageMetadata: ImageMetadata?
+    
     private let book: Book
     init(_ book: Book) {
         self.book = book
         self.title = book.title
+        self.imageUrl = book.smallImage
+        if let preview = book.smallImagePreview {
+            self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
+        }
         
         if let authorsArr = book.authors, !authorsArr.isEmpty {
             self.authors = authorsArr.joined(separator: ", ")
@@ -71,11 +87,11 @@ struct Books: View {
             if bookPacket.books.isEmpty {
                 Text("Loading ...")
             } else {
-                List(bookPacket.books) { book in
+                List($bookPacket.books) { book in
                     HStack(alignment: .top, spacing: 10) {
                         VStack{
-                            if let smallImage = book.smallImage,
-                               let smallImageInfo = book.smallImagePreview {
+                            if let smallImage = book.imageUrl.wrappedValue,
+                               let smallImageInfo = book.imageMetadata {
                                 
                                 AsyncImage(
                                     url: URL(string: smallImage),
@@ -96,7 +112,7 @@ struct Books: View {
                             }
                         }.frame(minWidth: 50, maxWidth: 50)
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(book.title)
+                            Text(book.title.wrappedValue)
                             Text("authors")
                                 .font(.subheadline.italic())
                                 .padding(.leading, 5)
@@ -125,7 +141,9 @@ struct Books: View {
                 if let data {
                     let decoder = JSONDecoder()
                     do {
-                        self.bookResults = try decoder.decode(BookResults.self, from: data)
+                        let results = try decoder.decode(BookResults.self, from: data)
+                        
+                        self.bookPacket.books = results.books.map { BookViewModel($0) }
                     } catch {
                         print("Error decoding:", error)
                     }
