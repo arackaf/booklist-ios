@@ -41,7 +41,10 @@ class BookViewModel: ObservableObject, Identifiable {
     }
     
     @Published
-    var imageToRender: UIImage?
+    var imagePreview: UIImage?
+    
+    @Published
+    var imageReady: UIImage?
     
     @Published
     var title: String;
@@ -50,28 +53,21 @@ class BookViewModel: ObservableObject, Identifiable {
     var authors: String
     
     @Published
-    var imageUrl: String?
-    
-    @Published
     var imageMetadata: ImageMetadata?
     
     private let book: Book
     init(_ book: Book) {
         self.book = book
         self.title = book.title
-        self.imageUrl = book.smallImage
         if let preview = book.smallImagePreview {
             self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
-            
-            print("PRE", preview.b64)
 
-        
             if let range = preview.b64.range(of: "base64,"),
                let data = Data(base64Encoded: String(preview.b64[range.upperBound...])),
                let uiImage = UIImage(data: data) {
                 
                 print("YES")
-                self.imageToRender = uiImage
+                self.imagePreview = uiImage
             }
         }
         
@@ -150,7 +146,7 @@ struct BooksList: View {
             
             HStack(alignment: .top, spacing: 10) {
                 VStack{
-                    if let imageToRender = book.wrappedValue.imageToRender,
+                    if let imageToRender = book.wrappedValue.imagePreview,
                        let metadata = book.wrappedValue.imageMetadata {
                         
                         Image(uiImage: imageToRender)
@@ -187,7 +183,7 @@ struct BooksList: View {
                 }.frame(minWidth: 50, maxWidth: 50)
                 VStack(alignment: .leading, spacing: 5) {
                     Text(book.title.wrappedValue)
-                    Text("authors")
+                    Text(book.authors.wrappedValue)
                         .font(.subheadline.italic())
                         .padding(.leading, 5)
                 }
