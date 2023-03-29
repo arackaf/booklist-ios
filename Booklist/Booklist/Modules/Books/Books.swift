@@ -17,7 +17,7 @@ struct Book : Codable, Identifiable {
     let id: Int
     let title: String
     let pages: Int
-    let authors: [String]
+    let authors: [String]?
     let smallImage: String?
     let smallImagePreview: ImageData?
 }
@@ -29,8 +29,33 @@ struct BookResults: Codable {
     let totalPages: Int
 }
 
+class BookViewModel: ObservableObject, Identifiable {
+    var id: Int {
+        self.book.id
+    }
+    
+    @Published
+    var title: String;
+    
+    @Published
+    var authors: String
+    
+    private let book: Book
+    init(_ book: Book) {
+        self.book = book
+        self.title = book.title
+        
+        if let authorsArr = book.authors, !authorsArr.isEmpty {
+            self.authors = authorsArr.joined(separator: ", ")
+        } else {
+            self.authors = ""
+        }
+    }
+}
+
 struct Books: View {
     @State private var bookResults: BookResults?
+    @State private var books: [BookViewModel] = []
     
     var body: some View {
         VStack{
@@ -63,7 +88,7 @@ struct Books: View {
                         }.frame(minWidth: 50, maxWidth: 50)
                         VStack(alignment: .leading, spacing: 5) {
                             Text(book.title)
-                            Text(book.authors.joined(separator: ", "))
+                            Text("authors")
                                 .font(.subheadline.italic())
                                 .padding(.leading, 5)
                         }
