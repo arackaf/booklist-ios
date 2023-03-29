@@ -120,7 +120,11 @@ struct Books: View {
             } else {
                 BooksList(bookPacket: bookPacket)
             }
-        }.task(priority: .userInitiated) {
+        }.onAppear() {
+            self.bookPacket.books = []
+        }
+        .task(priority: .userInitiated) {
+            self.bookPacket.books = []
             let url = URL(string: "https://mylibrary.io/api/books-public")!
             var request = URLRequest(url: url)
             
