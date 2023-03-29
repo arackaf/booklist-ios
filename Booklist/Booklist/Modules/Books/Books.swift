@@ -158,27 +158,35 @@ struct BooksList: View {
     
     var body: some View {
         List($bookPacket.books) { book in
-            
-            HStack(alignment: .top, spacing: 10) {
-                VStack{
-                    if let realImage = book.wrappedValue.imageReady {
-                        Text("REAL IMAGE OMGGGG")
-                    } else if let imageToRender = book.wrappedValue.imagePreview,
-                       let metadata = book.wrappedValue.imageMetadata {
-                        
-                        Image(uiImage: imageToRender)
-                            .resizable()
-                            .blur(radius: 5)
-                            .clipShape(Rectangle())
-                            .frame(
-                                minWidth: CGFloat(metadata.width),
-                                maxWidth: CGFloat(metadata.width),
-                                minHeight: CGFloat(metadata.height),
-                                maxHeight: CGFloat(metadata.height),
-                                alignment: .leading
-                            )
-                        
-                        
+            BooksDisplay(book: book.wrappedValue)
+        }
+    }
+}
+
+struct BooksDisplay: View {
+    @ObservedObject var book: BookViewModel
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            VStack{
+                if let realImage = book.imageReady {
+                    Text("REAL IMAGE OMGGGG")
+                } else if let imageToRender = book.imagePreview,
+                   let metadata = book.imageMetadata {
+                    
+                    Image(uiImage: imageToRender)
+                        .resizable()
+                        .blur(radius: 5)
+                        .clipShape(Rectangle())
+                        .frame(
+                            minWidth: CGFloat(metadata.width),
+                            maxWidth: CGFloat(metadata.width),
+                            minHeight: CGFloat(metadata.height),
+                            maxHeight: CGFloat(metadata.height),
+                            alignment: .leading
+                        )
+                    
+                    
 //                        AsyncImage(
 //                            url: URL(string: imageUrl),
 //                            content: { image in
@@ -194,16 +202,15 @@ struct BooksList: View {
 //                                Text("...")
 //                            }
 //                        )
-                    } else {
-                        Text("No image")
-                    }
-                }.frame(minWidth: 50, maxWidth: 50)
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(book.title.wrappedValue)
-                    Text(book.authors.wrappedValue)
-                        .font(.subheadline.italic())
-                        .padding(.leading, 5)
+                } else {
+                    Text("No image")
                 }
+            }.frame(minWidth: 50, maxWidth: 50)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(book.title)
+                Text(book.authors)
+                    .font(.subheadline.italic())
+                    .padding(.leading, 5)
             }
         }
     }
