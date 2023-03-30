@@ -86,8 +86,6 @@ class BookViewModel: ObservableObject, Identifiable {
                 }
 
                 if let data = data {
-                    print("GOT REAL IMAGE")
-
                     DispatchQueue.main.async { [weak self] in
                         Task.init {
                             let delay = Double.random(in: 0.75...2.5)
@@ -211,6 +209,7 @@ struct BooksDisplay: View {
             }.frame(minWidth: 50, maxWidth: 50)
             VStack(alignment: .leading, spacing: 5) {
                 Text(book.title)
+                    .lineLimit(2)
                 Text(book.authors)
                     .font(.subheadline.italic())
                     .padding(.leading, 5)
