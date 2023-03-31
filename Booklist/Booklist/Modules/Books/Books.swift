@@ -166,7 +166,11 @@ struct BooksList: View {
     var body: some View {
         NavigationStack {
             List($bookPacket.books) { book in
-                BooksDisplay(book: book.wrappedValue)
+                NavigationLink(destination: {
+                    BookDetails()
+                }, label: {
+                    BooksDisplay(book: book.wrappedValue)
+                })
             }
             .listStyle(.plain)
             .navigationTitle(Text("Books"))
@@ -222,5 +226,11 @@ struct BooksDisplay: View {
         }.alignmentGuide(.listRowSeparatorLeading) { _ in
             0
         }
+    }
+}
+
+struct BookDetails: View {
+    var body: some View {
+        Text("Details!")
     }
 }
