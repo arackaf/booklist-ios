@@ -24,8 +24,9 @@ struct Book : Codable, Identifiable {
     let title: String
     let pages: Int
     let authors: [String]?
-    let smallImage: String?
+    let mediumImage: String?
     let smallImagePreview: ImageData?
+    let mediumImagePreview: ImageData?
 }
 
 struct BookResults: Codable {
@@ -67,7 +68,7 @@ class BookViewModel: ObservableObject, Identifiable {
         }
         
         if let preview = book.smallImagePreview,
-           let imageUrl = book.smallImage,
+           let imageUrl = book.mediumImage,
            let downloadUrl = URL(string: imageUrl) {
             self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
 
@@ -167,7 +168,7 @@ struct BooksList: View {
         NavigationStack {
             List($bookPacket.books) { book in
                 NavigationLink(destination: {
-                    BookDetails()
+                    BookDetails(book: book.wrappedValue)
                 }, label: {
                     BooksDisplay(book: book.wrappedValue)
                 })
@@ -191,10 +192,8 @@ struct BooksDisplay: View {
                     Image(uiImage: realImage)
                         .resizable()
                         .frame(
-                            minWidth: CGFloat(metadata.width),
-                            maxWidth: CGFloat(metadata.width),
-                            minHeight: CGFloat(metadata.height),
-                            maxHeight: CGFloat(metadata.height),
+                            width: CGFloat(metadata.width),
+                            height: CGFloat(metadata.height),
                             alignment: .leading
                         )
                 } else if
@@ -206,10 +205,8 @@ struct BooksDisplay: View {
                         .blur(radius: 5)
                         .clipShape(Rectangle())
                         .frame(
-                            minWidth: CGFloat(metadata.width),
-                            maxWidth: CGFloat(metadata.width),
-                            minHeight: CGFloat(metadata.height),
-                            maxHeight: CGFloat(metadata.height),
+                            width: CGFloat(metadata.width),
+                            height: CGFloat(metadata.height),
                             alignment: .leading
                         )
                 } else {
@@ -230,6 +227,8 @@ struct BooksDisplay: View {
 }
 
 struct BookDetails: View {
+    @ObservedObject var book: BookViewModel
+    
     var body: some View {
         Text("Details!")
     }
