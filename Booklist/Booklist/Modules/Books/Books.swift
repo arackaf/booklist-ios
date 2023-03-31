@@ -164,8 +164,13 @@ struct BooksList: View {
     @ObservedObject var bookPacket: BookPacket
     
     var body: some View {
-        List($bookPacket.books) { book in
-            BooksDisplay(book: book.wrappedValue)
+        NavigationStack {
+            List($bookPacket.books) { book in
+                BooksDisplay(book: book.wrappedValue)
+            }
+            .listStyle(.plain)
+            .navigationTitle(Text("Books"))
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
