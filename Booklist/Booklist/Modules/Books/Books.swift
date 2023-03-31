@@ -10,7 +10,6 @@ import SwiftUI
 struct ImageMetadata {
     let width: Int
     let height: Int
-    let preview: String
 }
 
 struct ImageData : Codable {
@@ -24,6 +23,7 @@ struct Book : Codable, Identifiable {
     let title: String
     let pages: Int
     let authors: [String]?
+    let smallImage: String?
     let mediumImage: String?
     let smallImagePreview: ImageData?
     let mediumImagePreview: ImageData?
@@ -42,19 +42,28 @@ class BookViewModel: ObservableObject, Identifiable {
     }
     
     @Published
-    var imagePreview: UIImage?
+    var smallImagePreview: UIImage?
+
+    @Published
+    var smallImageMetadata: ImageMetadata?
+
+    @Published
+    var smallImage: UIImage?
+
+    @Published
+    var fullImagePreview: UIImage?
     
     @Published
-    var imageReady: UIImage?
+    var fullImageMetadata: ImageMetadata?
+    
+    @Published
+    var fullImage: UIImage?
     
     @Published
     var title: String;
     
     @Published
     var authors: String
-    
-    @Published
-    var imageMetadata: ImageMetadata?
     
     private let book: Book
     init(_ book: Book) {
@@ -68,36 +77,66 @@ class BookViewModel: ObservableObject, Identifiable {
         }
         
         if let preview = book.smallImagePreview,
+           // use the medium image if present since it *might* be higher resolution
+           let imageUrl = book.mediumImage ?? book.smallImage,
+           let downloadUrl = URL(string: imageUrl) {
+            self.smallImageMetadata = ImageMetadata(width: preview.w, height: preview.h)
+            self.smallImagePreview = getPreviewImage(preview: preview.b64)
+            
+            downloadCover(url: downloadUrl) { image in
+                self.smallImage = image
+                if (book.mediumImage == book.smallImage) {
+                    self.fullImage = image
+                }
+            }
+        }
+        
+        if let preview = book.mediumImagePreview,
            let imageUrl = book.mediumImage,
            let downloadUrl = URL(string: imageUrl) {
-            self.imageMetadata = ImageMetadata(width: preview.w, height: preview.h, preview: preview.b64)
-
-            if let range = preview.b64.range(of: "base64,"),
-               let data = Data(base64Encoded: String(preview.b64[range.upperBound...])),
-               let uiImage = UIImage(data: data) {
-                
-                self.imagePreview = uiImage
-            }
+            self.fullImageMetadata = ImageMetadata(width: preview.w, height: preview.h)
+            self.fullImagePreview = getPreviewImage(preview: preview.b64)
             
-            print("downloading")
-            URLSession.shared.dataTask(with: downloadUrl) { (data, response, error) in
-                guard error == nil else {
-                    print("Error downloading image", error)
-                    return
+            if book.mediumImage != nil && book.mediumImage != book.smallImage {
+                downloadCover(url: downloadUrl) { image in
+                    self.fullImage = image
                 }
-
-                if let data = data {
-                    DispatchQueue.main.async { [weak self] in
-                        Task.init {
-                            let delay = Double.random(in: 0.75...2.5)
-                            try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
-                            self?.imageReady = UIImage(data: data)
-                        }
-                    }
-                }
-            }.resume()
+            }
         }
     }
+    
+    private func getPreviewImage(preview: String) -> UIImage? {
+        if let range = preview.range(of: "base64,"),
+           let data = Data(base64Encoded: String(preview[range.upperBound...])),
+           let uiImage = UIImage(data: data) {
+            
+            return uiImage
+        } else {
+            return nil
+        }
+    }
+}
+
+func downloadCover(url: URL, callback: @escaping (UIImage?) -> Void) {
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+        guard error == nil else {
+            print("Error downloading image", error)
+            callback(nil)
+            return
+        }
+
+        if let data = data {
+            let result = UIImage(data: data)
+            
+            DispatchQueue.main.async {
+                Task.init {
+                    let delay = Double.random(in: 0.75...2.5)
+                    try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
+                    callback(result)
+                }
+            }
+        }
+    }.resume()
 }
 
 class BookPacket: ObservableObject {
@@ -222,9 +261,9 @@ struct BooksDisplay: View {
         HStack(alignment: .top, spacing: 10) {
             VStack{
                 BookCover(
-                    preview: book.imagePreview,
-                    image: book.imageReady,
-                    metadata: book.imageMetadata
+                    preview: book.smallImagePreview,
+                    image: book.smallImage,
+                    metadata: book.smallImageMetadata
                 )
             }.frame(minWidth: 50, maxWidth: 50)
             VStack(alignment: .leading, spacing: 5) {
@@ -244,6 +283,11 @@ struct BookDetails: View {
     @ObservedObject var book: BookViewModel
     
     var body: some View {
+        VStack {
+            HStack {
+                
+            }
+        }
         Text("Details!")
     }
 }
