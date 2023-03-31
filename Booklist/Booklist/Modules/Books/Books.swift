@@ -219,6 +219,8 @@ struct BooksDisplay: View {
                     .font(.subheadline.italic())
                     .padding(.leading, 5)
             }
+        }.alignmentGuide(.listRowSeparatorLeading) { _ in
+            0
         }
     }
 }
