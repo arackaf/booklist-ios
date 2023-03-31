@@ -9,7 +9,11 @@ import SwiftUI
 
 struct Settings: View {
     var body: some View {
-        Text("Settings")
+        VStack(alignment: .leading) {
+            Text("Settings").foregroundColor(.red)
+            Image("kw-short")
+                .frame(minWidth: 10)
+        }
     }
 }
 
