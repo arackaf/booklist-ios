@@ -16,6 +16,7 @@
 		17C25FBE29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FBD29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift */; };
 		17C25FCD29D31C6C00F2D9C0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FCC29D31C6C00F2D9C0 /* Settings.swift */; };
 		17C25FCF29D31CA600F2D9C0 /* Books.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FCE29D31CA600F2D9C0 /* Books.swift */; };
+		17C25FD829D7298200F2D9C0 /* BookDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FD729D7298200F2D9C0 /* BookDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		17C25FBD29D3192300F2D9C0 /* BooklistUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		17C25FCC29D31C6C00F2D9C0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		17C25FCE29D31CA600F2D9C0 /* Books.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Books.swift; sourceTree = "<group>"; };
+		17C25FD729D7298200F2D9C0 /* BookDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 		17C25FCA29D31C4900F2D9C0 /* Books */ = {
 			isa = PBXGroup;
 			children = (
+				17C25FD629D7295E00F2D9C0 /* Views */,
 				17C25FCE29D31CA600F2D9C0 /* Books.swift */,
 			);
 			path = Books;
@@ -163,6 +166,14 @@
 			children = (
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		17C25FD629D7295E00F2D9C0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				17C25FD729D7298200F2D9C0 /* BookDetails.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +310,7 @@
 				17C25FCD29D31C6C00F2D9C0 /* Settings.swift in Sources */,
 				17C25FA329D3192000F2D9C0 /* Home.swift in Sources */,
 				17C25FA129D3192000F2D9C0 /* BooklistApp.swift in Sources */,
+				17C25FD829D7298200F2D9C0 /* BookDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

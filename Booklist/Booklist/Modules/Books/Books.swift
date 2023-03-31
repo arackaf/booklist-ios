@@ -279,15 +279,4 @@ struct BooksDisplay: View {
     }
 }
 
-struct BookDetails: View {
-    @ObservedObject var book: BookViewModel
-    
-    var body: some View {
-        VStack {
-            HStack {
-                
-            }
-        }
-        Text("Details!")
-    }
-}
+
