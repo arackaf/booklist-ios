@@ -180,38 +180,52 @@ struct BooksList: View {
     }
 }
 
+struct BookCover: View {
+    let preview: UIImage?
+    let image: UIImage?
+    let metadata: ImageMetadata?
+    
+    var body: some View {
+        if let realImage = image,
+           let metadata = metadata {
+            
+            Image(uiImage: realImage)
+                .resizable()
+                .frame(
+                    width: CGFloat(metadata.width),
+                    height: CGFloat(metadata.height),
+                    alignment: .leading
+                )
+        } else if
+            let imageToRender = preview,
+            let metadata = metadata {
+            
+            Image(uiImage: imageToRender)
+                .resizable()
+                .blur(radius: 5)
+                .clipShape(Rectangle())
+                .frame(
+                    width: CGFloat(metadata.width),
+                    height: CGFloat(metadata.height),
+                    alignment: .leading
+                )
+        } else {
+            Text("No image")
+        }
+    }
+}
+
 struct BooksDisplay: View {
     @ObservedObject var book: BookViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             VStack{
-                if let realImage = book.imageReady,
-                   let metadata = book.imageMetadata {
-                    
-                    Image(uiImage: realImage)
-                        .resizable()
-                        .frame(
-                            width: CGFloat(metadata.width),
-                            height: CGFloat(metadata.height),
-                            alignment: .leading
-                        )
-                } else if
-                    let imageToRender = book.imagePreview,
-                    let metadata = book.imageMetadata {
-                    
-                    Image(uiImage: imageToRender)
-                        .resizable()
-                        .blur(radius: 5)
-                        .clipShape(Rectangle())
-                        .frame(
-                            width: CGFloat(metadata.width),
-                            height: CGFloat(metadata.height),
-                            alignment: .leading
-                        )
-                } else {
-                    Text("No image")
-                }
+                BookCover(
+                    preview: book.imagePreview,
+                    image: book.imageReady,
+                    metadata: book.imageMetadata
+                )
             }.frame(minWidth: 50, maxWidth: 50)
             VStack(alignment: .leading, spacing: 5) {
                 Text(book.title)
