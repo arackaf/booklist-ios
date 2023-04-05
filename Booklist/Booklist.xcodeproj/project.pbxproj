@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		175A64F429DA6C3900577FDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F329DA6C3900577FDE /* FirebaseAuth */; };
+		175A64F729DA6CBD00577FDE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F629DA6CBD00577FDE /* GoogleSignIn */; };
+		175A64F929DA6CBD00577FDE /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F829DA6CBD00577FDE /* GoogleSignInSwift */; };
 		17C25FA129D3192000F2D9C0 /* BooklistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FA029D3192000F2D9C0 /* BooklistApp.swift */; };
 		17C25FA329D3192000F2D9C0 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C25FA229D3192000F2D9C0 /* Home.swift */; };
 		17C25FA529D3192300F2D9C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C25FA429D3192300F2D9C0 /* Assets.xcassets */; };
@@ -37,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		175A64FC29DA713300577FDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		17C25F9D29D3192000F2D9C0 /* Booklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booklist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C25FA029D3192000F2D9C0 /* BooklistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistApp.swift; sourceTree = "<group>"; };
 		17C25FA229D3192000F2D9C0 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -57,6 +61,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				175A64F929DA6CBD00577FDE /* GoogleSignInSwift in Frameworks */,
+				175A64F429DA6C3900577FDE /* FirebaseAuth in Frameworks */,
+				175A64F729DA6CBD00577FDE /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +107,7 @@
 		17C25F9F29D3192000F2D9C0 /* Booklist */ = {
 			isa = PBXGroup;
 			children = (
+				175A64FC29DA713300577FDE /* Info.plist */,
 				17C25FD129D320E000F2D9C0 /* Data */,
 				17C25FD029D320C300F2D9C0 /* Modules */,
 				17C25FA029D3192000F2D9C0 /* BooklistApp.swift */,
@@ -192,6 +200,11 @@
 			dependencies = (
 			);
 			name = Booklist;
+			packageProductDependencies = (
+				175A64F329DA6C3900577FDE /* FirebaseAuth */,
+				175A64F629DA6CBD00577FDE /* GoogleSignIn */,
+				175A64F829DA6CBD00577FDE /* GoogleSignInSwift */,
+			);
 			productName = Booklist;
 			productReference = 17C25F9D29D3192000F2D9C0 /* Booklist.app */;
 			productType = "com.apple.product-type.application";
@@ -264,6 +277,10 @@
 				Base,
 			);
 			mainGroup = 17C25F9429D3192000F2D9C0;
+			packageReferences = (
+				175A64F229DA6C3900577FDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				175A64F529DA6CBD00577FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			productRefGroup = 17C25F9E29D3192000F2D9C0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -471,6 +488,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Booklist/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Booklist/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -499,6 +517,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Booklist/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Booklist/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -629,6 +648,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		175A64F229DA6C3900577FDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		175A64F529DA6CBD00577FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		175A64F329DA6C3900577FDE /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 175A64F229DA6C3900577FDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		175A64F629DA6CBD00577FDE /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 175A64F529DA6CBD00577FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		175A64F829DA6CBD00577FDE /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 175A64F529DA6CBD00577FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 17C25F9529D3192000F2D9C0 /* Project object */;
 }
