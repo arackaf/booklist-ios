@@ -79,6 +79,23 @@ class AuthenticationViewModel: ObservableObject {
                  
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
                 
+                guard let currentUser = Auth.auth().currentUser else { return }
+                
+                currentUser.getIDToken { (token, error) in
+                    if let error {
+                        print("error");
+                        return;
+                    }
+                    
+                    if let token {
+                        print("currentUserToken")
+                        print(token)
+                    }
+                }
+                
+                print("idToken", idToken.tokenString)
+                print("accessToken", accessToken.tokenString)
+                
                 print(credential.provider)
                 print("prior login", user.userID, user.profile?.email)
                 
@@ -135,6 +152,21 @@ class AuthenticationViewModel: ObservableObject {
             } else {
                 self.state = .signedIn
                 print("logged in", cred)
+                
+                guard let user = cred?.user else { return }
+                
+                user.getIDToken { (token, error) in
+                    if let error {
+                        print("error");
+                        return;
+                    }
+                    
+                    if let token {
+                        print("currentUserToken 2")
+                        print(token)
+                    }
+                }
+                
             }
         }
     }
