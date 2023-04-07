@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1741449F29DFD8540069A5BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1741449E29DFD8500069A5BD /* GoogleService-Info.plist */; };
 		175A64F429DA6C3900577FDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F329DA6C3900577FDE /* FirebaseAuth */; };
 		175A64F729DA6CBD00577FDE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F629DA6CBD00577FDE /* GoogleSignIn */; };
 		175A64F929DA6CBD00577FDE /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F829DA6CBD00577FDE /* GoogleSignInSwift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1741449E29DFD8500069A5BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		175A64FC29DA713300577FDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		17C25F9D29D3192000F2D9C0 /* Booklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booklist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C25FA029D3192000F2D9C0 /* BooklistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistApp.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		17C25F9F29D3192000F2D9C0 /* Booklist */ = {
 			isa = PBXGroup;
 			children = (
+				1741449E29DFD8500069A5BD /* GoogleService-Info.plist */,
 				175A64FC29DA713300577FDE /* Info.plist */,
 				17C25FD129D320E000F2D9C0 /* Data */,
 				17C25FD029D320C300F2D9C0 /* Modules */,
@@ -299,6 +302,7 @@
 			files = (
 				17C25FA829D3192300F2D9C0 /* Preview Assets.xcassets in Resources */,
 				17C25FA529D3192300F2D9C0 /* Assets.xcassets in Resources */,
+				1741449F29DFD8540069A5BD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
