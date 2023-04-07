@@ -85,18 +85,13 @@ class AuthenticationViewModel: ObservableObject {
                 self.state = .signedIn
         }
         } else {
-            // 2
             guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
-            // 3
             let configuration = GIDConfiguration(clientID: clientID)
         
-            // 4
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-        
 
-            // 5
             GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] user, error in
                 
                 authenticateUser(for: user, with: error)
@@ -105,11 +100,9 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func signOut() {
-        // 1
         GIDSignIn.sharedInstance.signOut()
       
         do {
-            // 2
             try Auth.auth().signOut()
         
             state = .signedOut
