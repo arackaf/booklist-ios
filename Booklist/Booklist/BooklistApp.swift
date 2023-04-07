@@ -68,8 +68,7 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     func signIn() {
-      // 1
-        if false /*GIDSignIn.sharedInstance.hasPreviousSignIn()*/ {
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
                 
                 guard let user = user else { return }
