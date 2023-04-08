@@ -4,8 +4,34 @@ import GoogleSignIn
 
 class AuthenticationViewModel: ObservableObject {
     enum SignInState {
+        case pending
         case signedIn
         case signedOut
+        case loggingIn
+    }
+    
+    func initialize() {
+        Task { [weak self] in
+            let signedIn = await isSignedIn()
+            
+            DispatchQueue.main.sync { [weak self] in
+                self?.state = signedIn ? .signedIn : .signedOut
+            }
+        }
+    }
+    
+    func isSignedIn() async -> Bool {
+        await withCheckedContinuation { continuation in
+            if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+                GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                    if let error {
+                        continuation.resume(returning: false)
+                    } else {
+                        continuation.resume(returning: user != nil)
+                    }
+                }
+            }
+        }
     }
 
     func signIn() {
@@ -110,5 +136,5 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    @Published var state: SignInState = .signedOut
+    @Published var state: SignInState = .pending
 }

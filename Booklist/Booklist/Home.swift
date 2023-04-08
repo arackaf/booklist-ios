@@ -14,6 +14,8 @@ struct Home: View {
         switch viewModel.state {
             case .signedIn: HomeView()
             case .signedOut: LoginView()
+            case .loggingIn: Text("Logging in ...")
+            case .pending: Text("Loading ...")
         }
     }
     

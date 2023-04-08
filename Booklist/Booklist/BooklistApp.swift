@@ -56,18 +56,14 @@ struct LoginView: View {
 struct BooklistApp: App {
     @StateObject var viewModel = AuthenticationViewModel()
     
-    init() {
-        setupAuthentication()
-    }
-    
     var body: some Scene {
         WindowGroup {
             Home()
                 .environmentObject(viewModel)
+                .onAppear {
+                    FirebaseApp.configure()
+                    viewModel.initialize()
+                }
         }
-    }
-    
-    private func setupAuthentication() {
-        FirebaseApp.configure()
     }
 }
