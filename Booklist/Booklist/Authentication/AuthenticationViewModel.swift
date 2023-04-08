@@ -15,8 +15,12 @@ class AuthenticationViewModel: ObservableObject {
         if let message {
             print(message)
         }
-        DispatchQueue.main.sync { [weak self] in
-            self?.state = .error
+        if Thread.isMainThread {
+            self.state = .error
+        } else {
+            DispatchQueue.main.sync { [weak self] in
+                self?.state = .error
+            }
         }
     }
     
@@ -106,8 +110,8 @@ class AuthenticationViewModel: ObservableObject {
                 }
                 
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
-              
-                Auth.auth().signIn(with: credential) { [unowned self] (cred, error) in
+                
+                Auth.auth().signIn(with: credential) { [weak self] (cred, error) in
                     if let error {
                         signInError(message: "Error " + error.localizedDescription)
                         return
@@ -118,13 +122,8 @@ class AuthenticationViewModel: ObservableObject {
                         return
                     }
                     
-                    DispatchQueue.main.sync { [unowned self] in
-                        self.state = .signedIn
-                    }
+                    self?.state = .signedIn
                 }
-                
-                //guard let idToken = user.idToken else { return }
-                //authenticateUser(for: user, with: error)
             }
         //}
     }
