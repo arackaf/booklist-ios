@@ -95,6 +95,21 @@ class AuthenticationViewModel: ObservableObject {
         //}
     }
     
+    func getIdToken()  {
+        guard let currentUser = Auth.auth().currentUser else { return }
+        
+        currentUser.getIDToken { (token, error) in
+            if let error {
+                print("Error getting token", error.localizedDescription);
+                return;
+            }
+            
+            if let token {
+                //return token
+            }
+        }
+    }
+    
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
         
