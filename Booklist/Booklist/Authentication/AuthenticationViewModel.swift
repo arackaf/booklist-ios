@@ -49,108 +49,75 @@ class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-
+    
     func signIn() {
-        /*if GIDSignIn.sharedInstance.hasPreviousSignIn() {
-            GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
-                
-                guard let user = user else { return }
-                
-                guard let idToken = user.idToken else {return }
-                let accessToken = user.accessToken
-                 
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
-                
-                guard let currentUser = Auth.auth().currentUser else { return }
-                
-                currentUser.getIDToken { (token, error) in
-                    if let error {
-                        print("error");
-                        return;
-                    }
-                    
-                    if let token {
-                        print("currentUserToken")
-                        print(token)
-                    }
-                }
-                
-                print("idToken", idToken.tokenString)
-                print("accessToken", accessToken.tokenString)
-                
-                print(credential.provider)
-                print("prior login", user.userID, user.profile?.email)
-                
-                self.state = .signedIn
+        self.state = .loggingIn
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            self.state = .error
+            return
         }
-        } else {*/
         
-            self.state = .loggingIn
-            guard let clientID = FirebaseApp.app()?.options.clientID else {
-                self.state = .error
+        let configuration = GIDConfiguration(clientID: clientID)
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] result, error in
+            if let error {
+                signInError(message: "Error " + error.localizedDescription)
                 return
             }
-        
-            let configuration = GIDConfiguration(clientID: clientID)
-        
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-            guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] result, error in
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken
+            else {
+                signInError(message: "No user, or no id token")
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
+            
+            Auth.auth().signIn(with: credential) { [weak self] (cred, error) in
+                
                 if let error {
                     signInError(message: "Error " + error.localizedDescription)
                     return
                 }
                 
-                guard
-                    let user = result?.user,
-                    let idToken = user.idToken else {
-                    signInError(message: "No user, or no id token")
+                guard let user = cred?.user else {
+                    signInError(message: "No user")
                     return
                 }
                 
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
-                
-                Auth.auth().signIn(with: credential) { [weak self] (cred, error) in
-                    if let error {
-                        signInError(message: "Error " + error.localizedDescription)
-                        return
-                    }
-                    
-                    guard let user = cred?.user else {
-                        signInError(message: "No user")
-                        return
-                    }
-                    
-                    self?.state = .signedIn
-                }
+                self?.state = .signedIn
             }
+        }
         //}
     }
     
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
-      
+        
         do {
             try Auth.auth().signOut()
-        
+            
             state = .signedOut
         } catch {
             print(error.localizedDescription)
         }
     }
-
+    
     private func authenticateUser(for result: GIDSignInResult?, with error: Error?) {
-//        if let error = error {
-//            print(error.localizedDescription)
-//            return
-//        }
+        //        if let error = error {
+        //            print(error.localizedDescription)
+        //            return
+        //        }
         
         guard let user = result?.user else { return }
         guard let idToken = user.idToken else { return }
-      
+        
         let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
-      
+        
         Auth.auth().signIn(with: credential) { [unowned self] (cred, error) in
             print("Sign in callback")
             print(user.userID)
@@ -162,21 +129,21 @@ class AuthenticationViewModel: ObservableObject {
                 
                 guard let user = cred?.user else { return }
                 
-//                user.getIDToken { (token, error) in
-//                    if let error {
-//                        print("error");
-//                        return;
-//                    }
-//
-//                    if let token {
-//                        print("currentUserToken 2")
-//                        print(token)
-//                    }
-//                }
+                //                user.getIDToken { (token, error) in
+                //                    if let error {
+                //                        print("error");
+                //                        return;
+                //                    }
+                //
+                //                    if let token {
+                //                        print("currentUserToken 2")
+                //                        print(token)
+                //                    }
+                //                }
                 
             }
         }
     }
-
+    
     @Published var state: SignInState = .pending
 }
