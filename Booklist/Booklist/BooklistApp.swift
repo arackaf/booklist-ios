@@ -1,10 +1,3 @@
-//
-//  BooklistApp.swift
-//  Booklist
-//
-//  Created by Adam Rackis on 3/28/23.
-//
-
 import SwiftUI
 import Firebase
 import GoogleSignIn
@@ -60,8 +53,6 @@ struct LoginView: View {
 }
 
 class AuthenticationViewModel: ObservableObject {
-
-    // 1
     enum SignInState {
         case signedIn
         case signedOut
@@ -128,7 +119,6 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     private func authenticateUser(for result: GIDSignInResult?, with error: Error?) {
-        // 1
         if let error = error {
             print(error.localizedDescription)
             return
@@ -169,8 +159,7 @@ class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-    
-    // 2
+
     @Published var state: SignInState = .signedOut
 }
 
