@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1741449F29DFD8540069A5BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1741449E29DFD8500069A5BD /* GoogleService-Info.plist */; };
+		174144A229E109DB0069A5BD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174144A129E109DB0069A5BD /* AuthenticationViewModel.swift */; };
 		175A64F429DA6C3900577FDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F329DA6C3900577FDE /* FirebaseAuth */; };
 		175A64F729DA6CBD00577FDE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F629DA6CBD00577FDE /* GoogleSignIn */; };
 		175A64F929DA6CBD00577FDE /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 175A64F829DA6CBD00577FDE /* GoogleSignInSwift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		1741449E29DFD8500069A5BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		174144A129E109DB0069A5BD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		175A64FC29DA713300577FDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		17C25F9D29D3192000F2D9C0 /* Booklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booklist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C25FA029D3192000F2D9C0 /* BooklistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooklistApp.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		174144A029E1095A0069A5BD /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				174144A129E109DB0069A5BD /* AuthenticationViewModel.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		17C25F9429D3192000F2D9C0 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 		17C25F9F29D3192000F2D9C0 /* Booklist */ = {
 			isa = PBXGroup;
 			children = (
+				174144A029E1095A0069A5BD /* Authentication */,
 				1741449E29DFD8500069A5BD /* GoogleService-Info.plist */,
 				175A64FC29DA713300577FDE /* Info.plist */,
 				17C25FD129D320E000F2D9C0 /* Data */,
@@ -327,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				174144A229E109DB0069A5BD /* AuthenticationViewModel.swift in Sources */,
 				17C25FCF29D31CA600F2D9C0 /* Books.swift in Sources */,
 				17C25FCD29D31C6C00F2D9C0 /* Settings.swift in Sources */,
 				17C25FA329D3192000F2D9C0 /* Home.swift in Sources */,
