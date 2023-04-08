@@ -8,6 +8,16 @@ class AuthenticationViewModel: ObservableObject {
         case signedIn
         case signedOut
         case loggingIn
+        case error
+    }
+    
+    private func signInError(message: String? = nil) {
+        if let message {
+            print(message)
+        }
+        DispatchQueue.main.sync { [weak self] in
+            self?.state = .error
+        }
     }
     
     func initialize() {
@@ -21,7 +31,7 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func isSignedIn() async -> Bool {
-        await withCheckedContinuation { continuation in
+        return await withCheckedContinuation { continuation in
             if GIDSignIn.sharedInstance.hasPreviousSignIn() {
                 GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
                     if let error {
@@ -30,12 +40,14 @@ class AuthenticationViewModel: ObservableObject {
                         continuation.resume(returning: user != nil)
                     }
                 }
+            } else {
+                continuation.resume(returning: false)
             }
         }
     }
 
     func signIn() {
-        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+        /*if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
                 
                 guard let user = user else { return }
@@ -67,19 +79,54 @@ class AuthenticationViewModel: ObservableObject {
                 
                 self.state = .signedIn
         }
-        } else {
-            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        } else {*/
+        
+            self.state = .loggingIn
+            guard let clientID = FirebaseApp.app()?.options.clientID else {
+                self.state = .error
+                return
+            }
         
             let configuration = GIDConfiguration(clientID: clientID)
         
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
 
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] user, error in
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] result, error in
+                if let error {
+                    signInError(message: "Error " + error.localizedDescription)
+                    return
+                }
                 
-                authenticateUser(for: user, with: error)
+                guard
+                    let user = result?.user,
+                    let idToken = user.idToken else {
+                    signInError(message: "No user, or no id token")
+                    return
+                }
+                
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
+              
+                Auth.auth().signIn(with: credential) { [unowned self] (cred, error) in
+                    if let error {
+                        signInError(message: "Error " + error.localizedDescription)
+                        return
+                    }
+                    
+                    guard let user = cred?.user else {
+                        signInError(message: "No user")
+                        return
+                    }
+                    
+                    DispatchQueue.main.sync { [unowned self] in
+                        self.state = .signedIn
+                    }
+                }
+                
+                //guard let idToken = user.idToken else { return }
+                //authenticateUser(for: user, with: error)
             }
-        }
+        //}
     }
     
     func signOut() {
@@ -95,14 +142,10 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     private func authenticateUser(for result: GIDSignInResult?, with error: Error?) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-      
-        print("authenticate user")
-        
-        print(result?.user ?? "user is nil")
+//        if let error = error {
+//            print(error.localizedDescription)
+//            return
+//        }
         
         guard let user = result?.user else { return }
         guard let idToken = user.idToken else { return }
@@ -120,17 +163,17 @@ class AuthenticationViewModel: ObservableObject {
                 
                 guard let user = cred?.user else { return }
                 
-                user.getIDToken { (token, error) in
-                    if let error {
-                        print("error");
-                        return;
-                    }
-                    
-                    if let token {
-                        print("currentUserToken 2")
-                        print(token)
-                    }
-                }
+//                user.getIDToken { (token, error) in
+//                    if let error {
+//                        print("error");
+//                        return;
+//                    }
+//
+//                    if let token {
+//                        print("currentUserToken 2")
+//                        print(token)
+//                    }
+//                }
                 
             }
         }

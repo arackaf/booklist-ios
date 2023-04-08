@@ -16,6 +16,7 @@ struct Home: View {
             case .signedOut: LoginView()
             case .loggingIn: Text("Logging in ...")
             case .pending: Text("Loading ...")
+            case .error: Text("Error")
         }
     }
     
