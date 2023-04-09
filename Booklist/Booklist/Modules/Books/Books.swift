@@ -149,6 +149,7 @@ class BookPacket: ObservableObject {
 }
 
 struct Books: View {
+    @EnvironmentObject var viewModel: AuthenticationViewModel
     @StateObject private var bookPacket: BookPacket = BookPacket(books: [])
     
     var body: some View {
@@ -162,6 +163,10 @@ struct Books: View {
             self.bookPacket.books = []
         }
         .task(priority: .userInitiated) {
+            let token = await viewModel.getIdToken()
+            
+            print("token:", token)
+            
             self.bookPacket.books = []
             let url = URL(string: "https://mylibrary.io/api/books-public")!
             var request = URLRequest(url: url)

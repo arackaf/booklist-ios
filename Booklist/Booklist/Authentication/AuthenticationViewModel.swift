@@ -92,20 +92,24 @@ class AuthenticationViewModel: ObservableObject {
                 self?.state = .signedIn
             }
         }
-        //}
     }
     
-    func getIdToken()  {
-        guard let currentUser = Auth.auth().currentUser else { return }
+    func getIdToken() async -> String {
+        guard let currentUser = Auth.auth().currentUser else { return "" }
         
-        currentUser.getIDToken { (token, error) in
-            if let error {
-                print("Error getting token", error.localizedDescription);
-                return;
-            }
-            
-            if let token {
-                //return token
+        return await withCheckedContinuation { continuation in
+            currentUser.getIDToken { (token, error) in
+                if let error {
+                    print("Error getting token", error.localizedDescription);
+                    continuation.resume(returning: "")
+                    return;
+                }
+                
+                guard let token else {
+                    continuation.resume(returning: "")
+                    return;
+                }
+                continuation.resume(returning: token)
             }
         }
     }
