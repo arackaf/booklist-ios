@@ -22,12 +22,26 @@ struct HomeView: View {
     private let user = GIDSignIn.sharedInstance.currentUser
     
     var body: some View {
-        VStack {
+        
+        TabView {
+            Books()
+                .tabItem {
+                    Label("Books", systemImage: "book.circle")
+                }
+            Settings()
+                .tabItem({
+                    VStack {
+                        Label("Settings", systemImage: "gear")
+                    }
+                })
+        }
+        
+        /*VStack {
             Text("Logged in")
             Button(action: viewModel.signOut) {
                 Text("Sign out")
             }
-        }
+        }*/
     }
 }
 

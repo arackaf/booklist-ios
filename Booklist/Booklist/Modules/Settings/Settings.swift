@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct Settings: View {
+    @EnvironmentObject var viewModel: AuthenticationViewModel
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Settings").foregroundColor(.red)
             Image("kw-short")
                 .frame(minWidth: 10)
+            Button(action: viewModel.signOut) {
+                Text("Sign out")
+            }
         }
     }
 }
