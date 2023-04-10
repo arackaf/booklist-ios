@@ -21,7 +21,6 @@ struct ImageData : Codable {
 struct Book : Codable, Identifiable {
     let id: Int
     let title: String
-    let pages: Int
     let authors: [String]?
     let smallImage: String?
     let mediumImage: String?
@@ -149,6 +148,7 @@ class BookPacket: ObservableObject {
 }
 
 struct Books: View {
+    @EnvironmentObject var viewModel: AuthenticationViewModel
     @StateObject private var bookPacket: BookPacket = BookPacket(books: [])
     
     var body: some View {
@@ -162,14 +162,23 @@ struct Books: View {
             self.bookPacket.books = []
         }
         .task(priority: .userInitiated) {
+            let token = await viewModel.getIdToken()
+            
+            print("token:", token)
+            
             self.bookPacket.books = []
-            let url = URL(string: "https://mylibrary.io/api/books-public")!
+            let url = URL(string: "https://mylibrary.io/api/books-mobile")!
             var request = URLRequest(url: url)
             
-            // the request is JSON
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            // the response expected to be in JSON format
             request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpMethod = "POST"
+            
+            let bodyLookup: [String: Any] = [
+                "token": token
+            ]
+            let jsonData = try? JSONSerialization.data(withJSONObject: bodyLookup)
+            request.httpBody = jsonData
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 guard error == nil else {
