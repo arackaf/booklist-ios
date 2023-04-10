@@ -127,11 +127,6 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     private func authenticateUser(for result: GIDSignInResult?, with error: Error?) {
-        //        if let error = error {
-        //            print(error.localizedDescription)
-        //            return
-        //        }
-        
         guard let user = result?.user else { return }
         guard let idToken = user.idToken else { return }
         
@@ -144,22 +139,6 @@ class AuthenticationViewModel: ObservableObject {
                 print("ERROR LOGGING IN", error.localizedDescription)
             } else {
                 self.state = .signedIn
-                print("logged in", cred)
-                
-                guard let user = cred?.user else { return }
-                
-                //                user.getIDToken { (token, error) in
-                //                    if let error {
-                //                        print("error");
-                //                        return;
-                //                    }
-                //
-                //                    if let token {
-                //                        print("currentUserToken 2")
-                //                        print(token)
-                //                    }
-                //                }
-                
             }
         }
     }
