@@ -24,7 +24,6 @@ private let coverPreview = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAA
 private let bookPreview = Book(
     id: 1,
     title: "Title",
-    pages: 100,
     authors: ["Author 1"],
     smallImage: cover,
     mediumImage: cover,
