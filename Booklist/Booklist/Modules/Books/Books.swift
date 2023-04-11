@@ -164,8 +164,6 @@ struct Books: View {
         .task(priority: .userInitiated) {
             let token = await viewModel.getIdToken()
             
-            print("token:", token)
-            
             self.bookPacket.books = []
             let url = URL(string: "https://mylibrary.io/api/books-mobile")!
             var request = URLRequest(url: url)
@@ -211,6 +209,7 @@ struct Books_Previews: PreviewProvider {
 
 struct BooksList: View {
     @ObservedObject var bookPacket: BookPacket
+    @EnvironmentObject var viewModel: AuthenticationViewModel
     
     var body: some View {
         NavigationStack {
@@ -224,6 +223,23 @@ struct BooksList: View {
             .listStyle(.plain)
             .navigationTitle(Text("Books"))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        print("Settings")
+                    }, label: {
+                        AsyncImage(
+                            url: viewModel.imageUrl,
+                            content: { content in
+                                content.image?
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                            }
+                        ).cornerRadius(16)
+                            
+                    })
+                }
+            }
         }
     }
 }

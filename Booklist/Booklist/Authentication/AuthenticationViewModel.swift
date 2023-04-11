@@ -3,6 +3,9 @@ import Firebase
 import GoogleSignIn
 
 class AuthenticationViewModel: ObservableObject {
+    @Published var state: SignInState = .pending
+    @Published var imageUrl: URL? = nil
+    
     enum SignInState {
         case pending
         case signedIn
@@ -37,7 +40,9 @@ class AuthenticationViewModel: ObservableObject {
     func isSignedIn() async -> Bool {
         return await withCheckedContinuation { continuation in
             if GIDSignIn.sharedInstance.hasPreviousSignIn() {
-                GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                GIDSignIn.sharedInstance.restorePreviousSignIn { [weak self] user, error in
+                    self?.imageUrl = user?.profile?.imageURL(withDimension: 64)
+
                     if let error {
                         continuation.resume(returning: false)
                     } else {
@@ -142,6 +147,4 @@ class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-    
-    @Published var state: SignInState = .pending
 }
