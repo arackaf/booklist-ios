@@ -207,9 +207,18 @@ struct Books_Previews: PreviewProvider {
     }
 }
 
+struct Modal: View {
+    var body: some View {
+        VStack {
+            Text("Hellooooooo")
+        }
+    }
+}
+
 struct BooksList: View {
     @ObservedObject var bookPacket: BookPacket
     @EnvironmentObject var viewModel: AuthenticationViewModel
+    @State private var showModal: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -226,7 +235,10 @@ struct BooksList: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        print("Settings")
+                        showModal = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                            showModal = false
+                        }
                     }, label: {
                         AsyncImage(
                             url: viewModel.imageUrl,
@@ -240,6 +252,9 @@ struct BooksList: View {
                     })
                 }
             }
+        }
+        .fullScreenCover(isPresented: $showModal) {
+            Modal()
         }
     }
 }
