@@ -208,9 +208,15 @@ struct Books_Previews: PreviewProvider {
 }
 
 struct Modal: View {
+    @Environment(\.presentationMode) private var presentationMode
+    
     var body: some View {
         VStack {
             Text("Hellooooooo")
+        }.onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
     }
 }
@@ -236,9 +242,9 @@ struct BooksList: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         showModal = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-                            showModal = false
-                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+//                            showModal = false
+//                        }
                     }, label: {
                         AsyncImage(
                             url: viewModel.imageUrl,
